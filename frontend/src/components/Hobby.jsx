@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom'; // Tambahkan Link
+import { useTranslation } from 'react-i18next'; // Import hook terjemahan
 import {
     Code2,
     Gamepad2,
@@ -13,39 +13,28 @@ import {
     Cpu
 } from 'lucide-react';
 
-const hobbyData = [
+// Struktur dasar untuk desain (Icon, warna, dan hiasan background)
+const hobbyConfig = [
     {
-        id: "coding", // Tambahkan ID untuk rute
-        title: "Coding",
-        subtitle: "System Architecting",
-        description: "Membangun logika kompleks dan arsitektur sistem yang skalabel menggunakan Go, Rust, dan React.",
+        id: "coding",
         icon: Code2,
         color: "var(--accent)",
         bgIcon: <Binary size={120} className="absolute -right-4 -bottom-4 opacity-[0.05] group-hover:opacity-[0.08] transition-all duration-700" />
     },
     {
         id: "gaming",
-        title: "Gaming",
-        subtitle: "Competitive Strategy",
-        description: "Menikmati tantangan mekanik dan strategi dalam game kompetitif untuk melatih refleks dan fokus.",
         icon: Gamepad2,
         color: "#4caf50",
         bgIcon: <Cpu size={120} className="absolute -right-4 -bottom-4 opacity-[0.05] group-hover:opacity-[0.08] transition-all duration-700" />
     },
     {
         id: "music",
-        title: "Music",
-        subtitle: "Aural Experience",
-        description: "Menemukan ritme kerja yang sempurna melalui playlist Spotify yang dikurasi khusus.",
         icon: Music,
         color: "#2196f3",
         bgIcon: <Play size={120} className="absolute -right-4 -bottom-4 opacity-[0.05] group-hover:opacity-[0.08] transition-all duration-700" />
     },
     {
         id: "film",
-        title: "Film",
-        subtitle: "Visual Storytelling",
-        description: "Mengapresiasi sinematografi dan narasi mendalam sebagai sumber inspirasi kreatif.",
         icon: Film,
         color: "#f44336",
         bgIcon: <Terminal size={120} className="absolute -right-4 -bottom-4 opacity-[0.05] group-hover:opacity-[0.08] transition-all duration-700" />
@@ -53,16 +42,19 @@ const hobbyData = [
 ];
 
 const HobbyCard = ({ data, index }) => {
+    const { t } = useTranslation();
+    const itemKey = data.id;
+
     return (
-        // Gunakan Link sebagai pembungkus utama
-        <Link to={`/hobby/${data.id}`} className="block h-full">
+        // Murni menggunakan tag <a> agar tidak memicu error dari react-router
+        <a href={`#hobby`} className="block h-full">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                whileTap={{ scale: 0.95 }} // Feedback tactile saat diklik
+                whileTap={{ scale: 0.95 }}
                 className="p-8 rounded-[2.5rem] border backdrop-blur-md relative overflow-hidden group transition-all duration-500 h-full"
                 style={{
                     borderColor: 'rgba(var(--text-main-rgb), 0.1)',
@@ -81,7 +73,7 @@ const HobbyCard = ({ data, index }) => {
                     <div className="flex items-center gap-2 mb-8">
                         <Sparkles size={12} style={{ color: data.color }} />
                         <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-40" style={{ color: 'var(--text-main)' }}>
-                            Interests.log
+                            {t('hobbySection.badge')}
                         </p>
                     </div>
 
@@ -91,21 +83,23 @@ const HobbyCard = ({ data, index }) => {
                     </div>
 
                     <h3 className="text-2xl font-black tracking-tight mb-2" style={{ color: 'var(--text-main)' }}>
-                        {data.title}
+                        {t(`hobbySection.items.${itemKey}.title`)}
                     </h3>
                     <p className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-4" style={{ color: data.color }}>
-                        {data.subtitle}
+                        {t(`hobbySection.items.${itemKey}.subtitle`)}
                     </p>
                     <p className="text-sm leading-relaxed opacity-60" style={{ color: 'var(--text-main)' }}>
-                        {data.description}
+                        {t(`hobbySection.items.${itemKey}.description`)}
                     </p>
                 </div>
             </motion.div>
-        </Link>
+        </a>
     );
 };
 
 const Hobby = () => {
+    const { t } = useTranslation();
+
     return (
         <section id="hobby" className="py-32 relative overflow-hidden bg-transparent">
             <div className="container mx-auto px-6 max-w-6xl relative z-10">
@@ -117,14 +111,15 @@ const Hobby = () => {
                     className="mb-16 flex items-center gap-4"
                 >
                     <h2 className="text-3xl md:text-5xl font-black tracking-tighter" style={{ color: 'var(--text-main)' }}>
-                        User<span className="text-[var(--accent)]">.</span>Interests
+                        {t('hobbySection.title')}
+                        <span className="text-[var(--accent)]"> {t('hobbySection.titleHighlight')}</span>
                     </h2>
                     <div className="h-[2px] flex-grow opacity-10" style={{ backgroundColor: 'var(--text-main)' }}></div>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {hobbyData.map((hobby, index) => (
-                        <HobbyCard key={index} data={hobby} index={index} />
+                    {hobbyConfig.map((hobby, index) => (
+                        <HobbyCard key={hobby.id} data={hobby} index={index} />
                     ))}
                 </div>
             </div>

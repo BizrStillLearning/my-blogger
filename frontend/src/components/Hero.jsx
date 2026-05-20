@@ -1,35 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useConfigStore } from "../store/useConfigStore.js";
-import { Github, Linkedin, Twitter, Download, ExternalLink, Code2, Square } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Github, Linkedin, Twitter, Download, ExternalLink } from 'lucide-react';
 
 import ProfileImg from '../assets/img/Profile.png';
 
 const Hero = () => {
-    const { lang } = useConfigStore();
-
-    const content = {
-        en: {
-            badge: "Visionary Full Stack Developer",
-            name: "Abidzar Dzakwan",
-            lastName: "Sahudi",
-            role: "Full Stack Developer",
-            description: '"Intermediate Full Stack Engineer & System Architect crafting scalable end-to-end solutions."',
-            btnWork: "See My Work",
-            btnCv: "View CV"
-        },
-        id: {
-            badge: "Full Stack Developer Visioner",
-            name: "Abidzar Dzakwan",
-            lastName: "Sahudi",
-            role: "Full Stack Developer",
-            description: '"Engineer Full Stack Menengah & Arsitek Sistem yang membangun solusi end-to-end yang skalabel."',
-            btnWork: "Lihat Karya",
-            btnCv: "Unduh CV"
-        },
-    };
-
-    const t = content[lang] || content['en'];
+    const { t } = useTranslation();
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -63,7 +40,7 @@ const Hero = () => {
                             <div className="w-full h-full rounded-full overflow-hidden border border-white/10">
                                 <img
                                     src={ProfileImg}
-                                    alt={t.name}
+                                    alt="Abidzar Dzakwan"
                                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                                 />
                             </div>
@@ -73,25 +50,25 @@ const Hero = () => {
 
                     <motion.div variants={itemVariants} className="px-6 py-1.5 rounded-full border mb-8 backdrop-blur-md text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] transition-all"
                                 style={{ borderColor: 'var(--accent)', color: 'var(--accent)', backgroundColor: 'rgba(255, 255, 255, 0.02)' }}>
-                        {t.badge}
+                        {t('hero.badge')}
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="mb-4">
                         <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-bold tracking-tighter leading-[0.75] transition-colors duration-700" style={{ color: 'var(--text-main)' }}>
-                            {t.name}
+                            Abidzar Dzakwan
                         </h1>
                         <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-bold tracking-tighter leading-[0.75] transition-colors duration-700" style={{ color: 'var(--text-main)' }}>
-                            {t.lastName}
+                            Sahudi
                         </h1>
                     </motion.div>
 
                     <motion.h3 variants={itemVariants} className="text-3xl md:text-6xl font-black mb-10 tracking-tight transition-all duration-1000"
                                style={{ color: 'var(--accent)', textShadow: `0 0 30px var(--accent)` }}>
-                        {t.role}
+                        {t('hero.role')}
                     </motion.h3>
 
                     <motion.p variants={itemVariants} className="text-sm md:text-xl italic max-w-xl mb-14 font-light leading-relaxed opacity-60 transition-colors duration-700" style={{ color: 'var(--text-main)' }}>
-                        {t.description}
+                        {t('hero.description')}
                     </motion.p>
 
                     <motion.div variants={itemVariants} className="flex gap-8 mb-14">
@@ -112,34 +89,34 @@ const Hero = () => {
                                 scale: 1.05,
                                 boxShadow: `0 0 30px var(--accent)`,
                                 backgroundColor: 'var(--accent)',
-                                color: '#ffffff' // Memastikan teks tetap putih saat hover
+                                color: '#ffffff'
                             }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-12 py-4 rounded-full font-bold flex items-center gap-3 transition-all duration-500 shadow-xl"
+                            className="px-12 py-4 rounded-full font-bold flex items-center gap-3 transition-all duration-500 shadow-xl cursor-pointer"
                             style={{
-                                backgroundColor: 'var(--text-main)', // Warna default (hitam/putih tergantung tema)
-                                color: 'var(--bg-main)'             // Kontras dengan background tombol
+                                backgroundColor: 'var(--text-main)',
+                                color: 'var(--bg-main)'
                             }}
                         >
-                            {t.btnWork} <ExternalLink size={20} />
+                            {t('hero.btnWork')} <ExternalLink size={20} />
                         </motion.button>
 
                         <motion.button
                             whileHover={{
                                 scale: 1.05,
-                                backgroundColor: 'rgba(var(--accent-rgb), 0.1)', // Menggunakan transparansi warna aksen
+                                backgroundColor: 'rgba(var(--accent-rgb), 0.1)',
                                 borderColor: 'var(--accent)',
                                 color: 'var(--accent)'
                             }}
                             whileTap={{ scale: 0.95 }}
-                            className="border-2 px-12 py-4 rounded-full font-bold flex items-center gap-3 backdrop-blur-sm transition-all duration-500"
+                            className="border-2 px-12 py-4 rounded-full font-bold flex items-center gap-3 backdrop-blur-sm transition-all duration-500 cursor-pointer"
                             style={{
                                 borderColor: 'var(--text-main)',
                                 color: 'var(--text-main)',
                                 backgroundColor: 'transparent'
                             }}
                         >
-                            {t.btnCv} <Download size={20} />
+                            {t('hero.btnCv')} <Download size={20} />
                         </motion.button>
                     </motion.div>
 

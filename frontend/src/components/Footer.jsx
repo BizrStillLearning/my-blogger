@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
     Github, Linkedin, Instagram, Mail,
-    Terminal, ArrowUp, Heart, Binary,
-    Globe, ShieldCheck, Zap
+    Terminal, ArrowUp, Binary
 } from 'lucide-react';
 
 const Footer = () => {
+    const { t } = useTranslation();
     const [time, setTime] = useState(new Date().toLocaleTimeString());
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const Footer = () => {
     return (
         <footer className="relative pt-32 pb-12 overflow-hidden border-t border-white/5 bg-gradient-to-b from-transparent to-[rgba(var(--accent-rgb),0.05)]">
 
-            {/* 1. Animated Wave Layer - Color Translucency */}
+            {/* 1. Animated Wave Layer - Desain Asli Anda */}
             <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] transform rotate-180 pointer-events-none opacity-30">
                 <svg className="relative block w-[calc(150%+1.3px)] h-[120px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
                     <motion.path
@@ -59,24 +60,19 @@ const Footer = () => {
             <div className="container mx-auto px-6 max-w-6xl relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-20">
 
-                    {/* Brand Section - Minimalist & Elegant */}
+                    {/* Brand Section */}
                     <div className="md:col-span-5 flex flex-col justify-start">
-                        <motion.div
-                            initial={{ opacity: 0, y: 15 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                        >
+                        <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl">
                                     <Terminal size={24} style={{ color: 'var(--accent)' }} />
                                 </div>
                                 <h2 className="text-3xl font-black tracking-tighter" style={{ color: 'var(--text-main)' }}>
-                                    INTERNAL<span className="text-[var(--accent)]">.</span>LOG
+                                    {t('footer.brand')}<span className="text-[var(--accent)]">.</span>
                                 </h2>
                             </div>
                             <p className="text-sm opacity-40 max-w-sm leading-relaxed mb-10 font-medium italic">
-                                Crafted for high-performance digital experiences.
-                                Based in Surabaya, Indonesia.
+                                {t('footer.desc')}
                             </p>
                         </motion.div>
 
@@ -97,13 +93,13 @@ const Footer = () => {
 
                     {/* Navigation - Minimal List */}
                     <div className="md:col-span-3">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.5em] mb-10 opacity-20">Directories</h4>
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.5em] mb-10 opacity-20">{t('footer.directories')}</h4>
                         <ul className="space-y-6">
-                            {['About', 'Timeline', 'Hobby', 'Gallery'].map((item, i) => (
+                            {['About', 'Timeline', 'Hobby', 'Gallery'].map((item) => (
                                 <motion.li key={item} whileHover={{ x: 5 }} className="group">
                                     <a href={`#${item.toLowerCase()}`} className="text-xs font-bold opacity-30 group-hover:opacity-100 group-hover:text-[var(--accent)] transition-all flex items-center gap-4 uppercase tracking-widest">
                                         <div className="w-1 h-1 rounded-full bg-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        {item}
+                                        {t(`nav${item}`)}
                                     </a>
                                 </motion.li>
                             ))}
@@ -122,27 +118,27 @@ const Footer = () => {
 
                         <div className="space-y-8 relative z-10">
                             <div className="flex justify-between items-center">
-                                <span className="text-[10px] font-black uppercase tracking-widest opacity-20">Status</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest opacity-20">{t('footer.status.title')}</span>
                                 <div className="flex items-center gap-3">
                                     <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e] animate-pulse" />
-                                    <span className="text-[10px] font-black text-green-500/80 uppercase tracking-widest">Running</span>
+                                    <span className="text-[10px] font-black text-green-500/80 uppercase tracking-widest">{t('footer.status.running')}</span>
                                 </div>
                             </div>
 
                             <div className="flex justify-between items-center">
-                                <span className="text-[10px] font-black uppercase tracking-widest opacity-20">Region</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest opacity-20">{t('footer.status.region')}</span>
                                 <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Surabaya, ID</span>
                             </div>
 
                             <div className="flex justify-between items-center">
-                                <span className="text-[10px] font-black uppercase tracking-widest opacity-20">Uptime</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest opacity-20">{t('footer.status.uptime')}</span>
                                 <span className="text-[10px] font-black uppercase tracking-widest opacity-60 font-mono italic">{time}</span>
                             </div>
                         </div>
                     </motion.div>
                 </div>
 
-                {/* Elegant Bottom Bar */}
+                {/* Bottom Bar */}
                 <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
                     <div className="flex items-center gap-8">
                         <p className="text-[9px] font-bold uppercase tracking-[0.3em] opacity-20">
@@ -156,7 +152,7 @@ const Footer = () => {
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center gap-4 py-2 px-4 rounded-xl border border-white/5 bg-white/5 opacity-40 hover:opacity-100 transition-all group"
                     >
-                        <span className="text-[9px] font-black uppercase tracking-[0.3em]">Jump_Top</span>
+                        <span className="text-[9px] font-black uppercase tracking-[0.3em]">{t('footer.jumpTop')}</span>
                         <ArrowUp size={16} className="group-hover:-translate-y-1 transition-transform" />
                     </motion.button>
                 </div>

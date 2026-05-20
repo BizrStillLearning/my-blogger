@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { useConfigStore } from '../store/useConfigStore';
+// PERBAIKAN: Import Link dari react-router-dom DIHAPUS
+import { useTranslation } from 'react-i18next';
 import {
-    Code2, Terminal, Coffee, Cpu, MapPin, Gamepad2,
+    Code2, Coffee, Cpu, MapPin, Gamepad2,
     Music, Sparkles, ArrowUpRight, ShieldCheck, Target, GraduationCap, Film, Binary, Orbit, Smartphone
 } from 'lucide-react';
 
@@ -39,32 +39,7 @@ const BentoCard = ({ children, title, className, delay = 0, glow = false, titleI
 );
 
 const About = () => {
-    const { lang } = useConfigStore();
-
-    const content = {
-        en: {
-            title: "Internal.log",
-            p1: "A tech enthusiast who finds peace in complex logic and a cup of warm coffee.",
-            p2: "My 3 years in a Pondok Pesantren taught me that great things require patience and discipline—two things I now apply every time I face a bug or design a system architecture.",
-            btnDetail: "Detail about me",
-            location: "Surabaya, ID",
-            listening: "Spotify",
-            gaming: "Gaming",
-            movie: "Cinema"
-        },
-        id: {
-            title: "Internal.log",
-            p1: "Tech enthusiast yang nemu ketenangan di balik logika rumit dan segelas kopi hangat.",
-            p2: "3 tahun di Pondok Pesantren ngajarin saya kalau hal besar butuh kesabaran dan disiplin—dua hal yang sekarang saya terapin tiap kali ketemu bug atau ngerancang arsitektur sistem.",
-            btnDetail: "Detail tentang saya",
-            location: "Surabaya, ID",
-            listening: "Spotify",
-            gaming: "Gaming",
-            movie: "Bioskop"
-        },
-    };
-
-    const t = content[lang] || content['en'];
+    const { t } = useTranslation();
 
     return (
         <section id="about" className="py-24 relative overflow-hidden">
@@ -77,7 +52,7 @@ const About = () => {
                     className="mb-12 flex items-center gap-4"
                 >
                     <h2 className="text-3xl md:text-5xl font-black tracking-tighter" style={{ color: 'var(--text-main)' }}>
-                        {t.title}
+                        {t('about.title')}
                     </h2>
                     <div className="h-[2px] flex-grow opacity-10" style={{ backgroundColor: 'var(--text-main)' }}></div>
                 </motion.div>
@@ -95,22 +70,23 @@ const About = () => {
 
                         <div className="max-w-2xl relative z-10">
                             <h3 className="text-2xl md:text-5xl font-bold mb-6 leading-[1.1] tracking-tight" style={{ color: 'var(--text-main)' }}>
-                                {t.p1}
+                                {t('about.p1')}
                             </h3>
                             <p className="text-base md:text-lg opacity-60 leading-relaxed mb-8" style={{ color: 'var(--text-main)' }}>
-                                {t.p2}
+                                {t('about.p2')}
                             </p>
 
-                            <Link to="/about">
+                            {/* PERBAIKAN: Menggunakan tag <a> biasa */}
+                            <a href="#about" className="inline-block">
                                 <motion.button
                                     whileHover={{ scale: 1.05, x: 5 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="flex items-center gap-3 px-8 py-4 rounded-[1.5rem] text-sm font-bold transition-all shadow-xl"
+                                    className="flex items-center gap-3 px-8 py-4 rounded-[1.5rem] text-sm font-bold transition-all shadow-xl cursor-pointer"
                                     style={{ backgroundColor: 'var(--accent)', color: 'white' }}
                                 >
-                                    {t.btnDetail} <ArrowUpRight size={20} />
+                                    {t('about.btnDetail')} <ArrowUpRight size={20} />
                                 </motion.button>
-                            </Link>
+                            </a>
                         </div>
                     </BentoCard>
 
@@ -152,26 +128,27 @@ const About = () => {
                         delay={0.5}
                     >
                         <div className="grid grid-cols-3 gap-4 h-full items-center py-5">
-                            <Link to="/hobby/music" className="h-full">
+                            {/* PERBAIKAN: Menggunakan tag <a> biasa */}
+                            <a href="#hobby" className="h-full block">
                                 <motion.div whileHover={{ y: -5, backgroundColor: 'rgba(var(--accent-rgb), 0.1)' }} className="flex flex-col items-center justify-center p-4 rounded-[1.8rem] h-full border border-white/5 transition-all duration-500 bg-white/5 backdrop-blur-sm group/music">
                                     <Music size={24} style={{ color: 'var(--accent)' }} className="mb-2" />
-                                    <p className="text-[9px] font-black uppercase tracking-widest text-center" style={{ color: 'var(--text-main)' }}>{t.listening}</p>
+                                    <p className="text-[9px] font-black uppercase tracking-widest text-center" style={{ color: 'var(--text-main)' }}>{t('about.listening')}</p>
                                 </motion.div>
-                            </Link>
+                            </a>
 
-                            <Link to="/hobby/gaming" className="h-full">
+                            <a href="#hobby" className="h-full block">
                                 <motion.div whileHover={{ y: -5, backgroundColor: 'rgba(var(--accent-rgb), 0.05)' }} className="flex flex-col items-center justify-center p-4 rounded-[1.8rem] h-full border border-white/5 bg-white/5 backdrop-blur-sm transition-all duration-500">
                                     <Gamepad2 size={24} style={{ color: 'var(--accent)' }} className="mb-2 opacity-40" />
-                                    <p className="text-[9px] font-black uppercase tracking-widest text-center" style={{ color: 'var(--text-main)' }}>{t.gaming}</p>
+                                    <p className="text-[9px] font-black uppercase tracking-widest text-center" style={{ color: 'var(--text-main)' }}>{t('about.gaming')}</p>
                                 </motion.div>
-                            </Link>
+                            </a>
 
-                            <Link to="/hobby/cinema" className="h-full">
+                            <a href="#hobby" className="h-full block">
                                 <motion.div whileHover={{ y: -5, backgroundColor: 'rgba(var(--accent-rgb), 0.05)' }} className="flex flex-col items-center justify-center p-4 rounded-[1.8rem] h-full border border-white/5 bg-white/5 backdrop-blur-sm transition-all duration-500">
                                     <Film size={24} style={{ color: 'var(--accent)' }} className="mb-2" />
-                                    <p className="text-[9px] font-black uppercase tracking-widest text-center" style={{ color: 'var(--text-main)' }}>{t.movie}</p>
+                                    <p className="text-[9px] font-black uppercase tracking-widest text-center" style={{ color: 'var(--text-main)' }}>{t('about.movie')}</p>
                                 </motion.div>
-                            </Link>
+                            </a>
                         </div>
                     </BentoCard>
 
@@ -183,9 +160,9 @@ const About = () => {
                     >
                         <div className="flex flex-col gap-5">
                             {[
-                                { label: lang === 'id' ? 'Filosofi' : 'Philosophy', value: 'Disiplin', icon: ShieldCheck },
-                                { label: lang === 'id' ? 'Energi' : 'Fuel', value: 'Kafein', icon: Coffee },
-                                { label: lang === 'id' ? 'Prinsip' : 'State', value: 'Relentless', icon: Target }
+                                { label: t('about.values.philosophy'), value: t('about.values.discipline'), icon: ShieldCheck },
+                                { label: t('about.values.fuel'), value: t('about.values.caffeine'), icon: Coffee },
+                                { label: t('about.values.state'), value: t('about.values.relentless'), icon: Target }
                             ].map((stat, i) => (
                                 <div key={i} className="flex items-center gap-4 group/stat">
                                     <div className="p-3 rounded-2xl transition-all duration-300 group-hover/stat:bg-white/10 group-hover/stat:scale-110 shadow-lg"
@@ -225,7 +202,7 @@ const About = () => {
                                     <MapPin size={20} className="animate-pulse" />
                                 </div>
                                 <div>
-                                    <p className="text-[11px] font-black uppercase leading-none mb-1" style={{ color: 'var(--text-main)' }}>{t.location}</p>
+                                    <p className="text-[11px] font-black uppercase leading-none mb-1" style={{ color: 'var(--text-main)' }}>{t('about.location')}</p>
                                     <p className="text-[9px] opacity-40 font-bold uppercase tracking-wider leading-none">Active Node</p>
                                 </div>
                             </div>

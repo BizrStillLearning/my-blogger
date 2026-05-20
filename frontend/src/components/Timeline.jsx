@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useTranslation } from 'react-i18next'; // Import i18n hook
 import {
     GraduationCap,
     Code2,
@@ -7,29 +8,15 @@ import {
     Sparkles
 } from 'lucide-react';
 
-const timelineData = [
-    {
-        year: "2021 - 2024",
-        title: "SMK TI Annajiyah Bahrul Ulum",
-        subtitle: "Vocational High School",
-        description: "Alumni SMK TI di Jombang. Menjalani 3 tahun di Pondok Pesantren yang membentuk kedisiplinan tinggi dan fundamental IT yang kuat.",
-        icon: GraduationCap,
-        side: "left",
-        tags: ["Informatics", "Boarding School"]
-    },
-    {
-        year: "2024 - Sekarang",
-        title: "Informatics Student",
-        subtitle: "Universitas Muhammadiyah Surabaya",
-        description: "Mahasiswa Informatika yang fokus pada Web Development, AI, dan Robotics. Membangun fondasi sistem yang skalabel.",
-        icon: Code2,
-        side: "right",
-        tags: ["Academic", "Full Stack"]
-    }
+// Struktur dasar untuk layout & icon saja (Teksnya diambil dari i18n)
+const timelineStructure = [
+    { id: 'item1', icon: GraduationCap, side: "left" },
+    { id: 'item2', icon: Code2, side: "right" }
 ];
 
-const TimelineCard = ({ data, index }) => {
-    const isLeft = data.side === "left";
+const TimelineCard = ({ itemKey, icon: Icon, side, index, isLast }) => {
+    const { t } = useTranslation();
+    const isLeft = side === "left";
     const cardRef = useRef(null);
 
     const { scrollYProgress } = useScroll({
@@ -39,11 +26,14 @@ const TimelineCard = ({ data, index }) => {
 
     const yParallax = useTransform(scrollYProgress, [0, 1], [-50, 50]);
 
+    // Mengambil data spesifik (array) untuk tags dari i18next
+    const tags = t(`timeline.items.${itemKey}.tags`, { returnObjects: true }) || [];
+
     return (
         <div ref={cardRef} className={`relative flex items-center justify-between mb-32 w-full ${isLeft ? 'md:flex-row-reverse' : 'md:flex-row'} flex-col`}>
 
             {/* Garis Tengah - Disesuaikan agar berhenti di poin terakhir */}
-            <div className={`absolute left-1/2 -translate-x-1/2 w-[2px] bg-gradient-to-b from-[var(--accent)] to-transparent opacity-20 hidden md:block z-0 ${index === timelineData.length - 1 ? 'h-full' : 'h-[200%]'}`}
+            <div className={`absolute left-1/2 -translate-x-1/2 w-[2px] bg-gradient-to-b from-[var(--accent)] to-transparent opacity-20 hidden md:block z-0 ${isLast ? 'h-full' : 'h-[200%]'}`}
                  style={{ top: '0' }} />
 
             {/* Dot Indicator */}
@@ -81,7 +71,7 @@ const TimelineCard = ({ data, index }) => {
                 <div className="flex items-center gap-2 mb-6 relative z-10">
                     <Sparkles size={12} style={{ color: 'var(--accent)' }} />
                     <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-40" style={{ color: 'var(--text-main)' }}>
-                        {data.year}
+                        {t(`timeline.items.${itemKey}.year`)}
                     </p>
                 </div>
 
@@ -89,24 +79,24 @@ const TimelineCard = ({ data, index }) => {
                     <div className="flex items-center gap-5 mb-5">
                         <div className="p-4 rounded-2xl shadow-inner transition-colors group-hover:bg-white/5"
                              style={{ backgroundColor: 'rgba(var(--accent-rgb), 0.1)' }}>
-                            <data.icon size={26} style={{ color: 'var(--accent)' }} />
+                            <Icon size={26} style={{ color: 'var(--accent)' }} />
                         </div>
                         <div>
                             <h3 className="text-2xl font-black tracking-tight" style={{ color: 'var(--text-main)' }}>
-                                {data.title}
+                                {t(`timeline.items.${itemKey}.title`)}
                             </h3>
                             <p className="text-[10px] opacity-40 font-bold uppercase tracking-widest leading-none mt-1">
-                                {data.subtitle}
+                                {t(`timeline.items.${itemKey}.subtitle`)}
                             </p>
                         </div>
                     </div>
 
                     <p className="text-sm leading-relaxed opacity-60 mb-6" style={{ color: 'var(--text-main)' }}>
-                        {data.description}
+                        {t(`timeline.items.${itemKey}.description`)}
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                        {data.tags.map((tag, i) => (
+                        {Array.isArray(tags) && tags.map((tag, i) => (
                             <span key={i} className="text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg border border-white/5 bg-white/5" style={{ color: 'var(--text-main)' }}>
                                 #{tag}
                             </span>
@@ -121,6 +111,8 @@ const TimelineCard = ({ data, index }) => {
 };
 
 const Timeline = () => {
+    const { t } = useTranslation();
+
     return (
         <section id="timeline" className="py-32 relative overflow-hidden bg-transparent">
             <div className="container mx-auto px-6 max-w-6xl relative z-10">
@@ -132,14 +124,22 @@ const Timeline = () => {
                     className="mb-24 flex items-center gap-4"
                 >
                     <h2 className="text-3xl md:text-5xl font-black tracking-tighter" style={{ color: 'var(--text-main)' }}>
-                        System<span className="text-[var(--accent)]">.</span>History
+                        {t('timeline.title')}
+                        <span className="text-[var(--accent)]"> {t('timeline.titleHighlight')}</span>
                     </h2>
                     <div className="h-[2px] flex-grow opacity-10" style={{ backgroundColor: 'var(--text-main)' }}></div>
                 </motion.div>
 
                 <div className="relative pb-20">
-                    {timelineData.map((item, index) => (
-                        <TimelineCard key={index} data={item} index={index} />
+                    {timelineStructure.map((item, index) => (
+                        <TimelineCard
+                            key={item.id}
+                            itemKey={item.id}
+                            icon={item.icon}
+                            side={item.side}
+                            index={index}
+                            isLast={index === timelineStructure.length - 1}
+                        />
                     ))}
                 </div>
             </div>
