@@ -6,6 +6,7 @@ import Timeline from "../components/Timeline.jsx";
 import Hobby from "../components/Hobby.jsx";
 import Gallery from "../components/Gallery.jsx";
 import Footer from "../components/Footer.jsx";
+import TechStack from "../components/TechStack.jsx";
 
 const Home = () => {
     return (
@@ -16,6 +17,7 @@ const Home = () => {
             <div className="relative">
                 <Hero />
                 <About />
+                <TechStack />
                 <Timeline />
                 <Hobby />
                 <Gallery />
@@ -26,3 +28,4 @@ const Home = () => {
 };
 
 export default Home;
+

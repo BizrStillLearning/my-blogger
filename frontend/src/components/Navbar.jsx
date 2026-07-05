@@ -29,7 +29,7 @@ const Navbar = () => {
         const handleScroll = () => { setScrolled(window.scrollY > 10); };
         window.addEventListener('scroll', handleScroll, { passive: true });
 
-        const sectionIds = ['about', 'timeline', 'hobby', 'gallery'];
+        const sectionIds = ['about', 'tech-stack', 'timeline', 'hobby', 'gallery'];
         const observerOptions = { root: null, rootMargin: '-40% 0px -50% 0px', threshold: 0 };
 
         const observerCallback = (entries) => {
@@ -57,6 +57,7 @@ const Navbar = () => {
     const navLinks = [
         { name: t('navHome'), href: '#' },
         { name: t('navAbout'), href: '#about' },
+        { name: t('navTech'), href: '#tech-stack' },
         { name: t('navTimeline'), href: '#timeline' },
         { name: t('navHobby'), href: '#hobby' },
         { name: t('navGallery'), href: '#gallery' },
@@ -98,12 +99,15 @@ const Navbar = () => {
             style={{ paddingTop: scrolled ? '1.5rem' : '0rem', transition: 'padding 0.8s cubic-bezier(0.23, 1, 0.32, 1)' }}
         >
             <nav
-                className={`pointer-events-auto flex items-center justify-between border-none transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-                    scrolled ? 'w-[92%] max-w-[1100px] rounded-[2.5rem] px-6 py-2 shadow-2xl ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-xl' : 'w-full max-w-full rounded-none px-6 md:px-10 py-6 shadow-none backdrop-blur-0'
+                className={
+                `pointer-events-auto mx-auto flex items-center justify-between border-none transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] 
+                ${
+                    scrolled
+                        ? 'w-[92%] max-w-[1100px] rounded-[2.5rem] px-6 py-2 shadow-2xl ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-xl bg-white/70 dark:bg-slate-900/80'
+                        : 'w-full max-w-full rounded-none px-6 md:px-10 py-6 shadow-none backdrop-blur-0 bg-transparent'
                 }`}
                 style={{ backgroundColor: scrolled ? 'var(--nav-bg)' : 'transparent', willChange: 'width, max-width, padding' }}
             >
-                {/* Logo Section */}
                 <motion.div variants={itemVariants} className="flex items-center gap-2 cursor-pointer group shrink-0">
                     <div className="p-2 rounded-xl shadow-md group-hover:rotate-6 transition-transform" style={{ backgroundColor: 'var(--accent)' }}>
                         <Code2 className="w-5 h-5 text-white" />
@@ -113,7 +117,6 @@ const Navbar = () => {
                     </span>
                 </motion.div>
 
-                {/* Desktop Menu */}
                 <motion.div variants={itemVariants} className="hidden md:flex items-center gap-1 p-1 rounded-full backdrop-blur-sm transition-all duration-700" style={{ backgroundColor: 'rgba(100, 116, 139, 0.1)' }}>
                     {navLinks.map((link) => {
                         const isActive = activeSection === link.href;
@@ -129,9 +132,7 @@ const Navbar = () => {
                     })}
                 </motion.div>
 
-                {/* Actions Group */}
                 <motion.div variants={itemVariants} className="flex items-center gap-2 md:gap-4 shrink-0">
-                    {/* Language Selector (Desktop) */}
                     <div className="hidden md:block relative">
                         <button
                             onClick={() => { setShowLangMenu(!showLangMenu); setShowThemeMenu(false); }}
@@ -174,7 +175,6 @@ const Navbar = () => {
                         </AnimatePresence>
                     </div>
 
-                    {/* Theme Picker (Desktop) */}
                     <div className="hidden md:block relative">
                         <button onClick={() => { setShowThemeMenu(!showThemeMenu); setShowLangMenu(false); }} className="p-2.5 rounded-full border-none transition-all shadow-sm active:scale-90 cursor-pointer" style={{ backgroundColor: 'rgba(100, 116, 139, 0.1)' }}>
                             <Palette className="w-5 h-5" style={{ color: 'var(--accent)' }} />
@@ -192,13 +192,11 @@ const Navbar = () => {
                         </AnimatePresence>
                     </div>
 
-                    {/* Mobile Toggle */}
                     <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden p-2.5 rounded-full transition-colors active:scale-90 cursor-pointer" style={{ color: 'var(--text-main)', backgroundColor: 'rgba(100, 116, 139, 0.1)' }}>
                         {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
                 </motion.div>
 
-                {/* MOBILE MENU CONTENT */}
                 <AnimatePresence>
                     {isMobileMenuOpen && (
                         <motion.div
@@ -222,7 +220,6 @@ const Navbar = () => {
                                 </div>
 
                                 <div className="pt-6 border-t border-black/5 dark:border-white/10 flex flex-col items-center gap-6">
-                                    {/* Mobile Theme */}
                                     <div className="flex flex-col items-center gap-3 w-full">
                                         <p className="text-[10px] uppercase font-bold tracking-widest opacity-50" style={{ color: 'var(--text-main)' }}>{t('selectTheme')}</p>
                                         <div className="flex justify-center gap-5">
@@ -232,7 +229,6 @@ const Navbar = () => {
                                         </div>
                                     </div>
 
-                                    {/* Mobile Language */}
                                     <div className="flex flex-col items-center gap-3 w-full">
                                         <p className="text-[10px] uppercase font-bold tracking-widest opacity-50" style={{ color: 'var(--text-main)' }}>{t('language')}</p>
                                         <div className="grid grid-cols-4 gap-3 w-full px-2">

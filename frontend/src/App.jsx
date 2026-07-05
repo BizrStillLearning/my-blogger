@@ -4,56 +4,98 @@ import { useConfigStore } from './store/useConfigStore';
 import Home from '../src/views/Home';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlobalBackground from "./components/GlobalBackground.jsx";
-import GalleryDetail from "./views/GalleryDetails.jsx";
 
-const morphPaths = [
-    "M25,50 C25,30 30,25 50,25 C70,25 75,30 75,50 C75,70 70,75 50,75 C30,75 25,70 25,50 Z",
-    "M20,50 C20,30 30,20 50,20 C70,20 80,30 80,50 C80,70 70,80 50,80 C30,80 20,70 20,50 Z",
-    "M30,50 C30,20 20,30 50,20 C80,10 70,40 70,50 C70,80 80,70 50,80 C20,90 30,60 30,50 Z",
-    "M25,50 C25,30 30,25 50,25 C70,25 75,30 75,50 C75,70 70,75 50,75 C30,75 25,70 25,50 Z"
-];
+const MobPsychoLoader = ({ onComplete }) => {
+    const [progress, setProgress] = useState(0);
+    const [isExploding, setIsExploding] = useState(false);
 
-const LoadingScreen = () => {
+    useEffect(() => {
+        const duration = 2500;
+        const intervalTime = 40;
+        const totalSteps = duration / intervalTime;
+        let currentStep = 0;
+
+        const timer = setInterval(() => {
+            currentStep++;
+
+            const easeInExpo = currentStep === totalSteps ? 1 : Math.pow(2, 10 * (currentStep / totalSteps - 1));
+            const currentProgress = Math.min(Math.floor(easeInExpo * 100), 100);
+
+            setProgress(currentProgress);
+
+            if (currentStep >= totalSteps || currentProgress >= 100) {
+                clearInterval(timer);
+                setProgress(100);
+                setIsExploding(true);
+
+                setTimeout(() => {
+                    onComplete();
+                }, 800);
+            }
+        }, intervalTime);
+
+        return () => clearInterval(timer);
+    }, [onComplete]);
+
+    const shakeIntensity = progress >= 100 ? 0 : progress > 80 ? 8 : progress > 50 ? 3 : 0;
+
     return (
         <motion.div
-            key="loading-wrapper"
-            className="fixed inset-0 z-[999] flex flex-col items-center justify-center transition-colors duration-700"
-            style={{ backgroundColor: 'var(--bg-main)' }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            key="mob-loader"
+            className="fixed inset-0 z-[999] flex flex-col items-center justify-center overflow-hidden"
+            animate={{ backgroundColor: isExploding ? 'var(--text-main)' : '#000000' }}
+            exit={{
+                opacity: 0,
+                scale: 1.5,
+                filter: "blur(20px)"
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
         >
-            <div className="relative">
+            <div className="relative flex flex-col items-center justify-center z-10 mix-blend-difference">
+                {!isExploding && (
+                    <motion.div
+                        className="text-xs font-black tracking-[0.5em] uppercase mb-4 text-white"
+                        animate={{ opacity: [1, 0, 1] }}
+                        transition={{ repeat: Infinity, duration: progress > 80 ? 0.2 : 0.8 }}
+                    >
+                        Psychic Tension
+                    </motion.div>
+                )}
+
                 <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                    className="absolute inset-0 blur-3xl rounded-full"
-                    style={{ backgroundColor: 'var(--accent)' }}
-                />
+                    className="text-8xl md:text-[150px] font-black tabular-nums tracking-tighter flex items-baseline text-white"
+                    style={{ textShadow: isExploding ? 'none' : '4px 4px 0px var(--accent)' }}
+                    animate={
+                        isExploding
+                            ? { scale: [1, 1.5], rotate: 0 }
+                            : {
+                                x: [-shakeIntensity, shakeIntensity, -shakeIntensity],
+                                y: [shakeIntensity, -shakeIntensity, shakeIntensity],
+                            }
+                    }
+                    transition={
+                        isExploding
+                            ? { duration: 0.5, type: "spring" }
+                            : { repeat: Infinity, duration: 0.1 }
+                    }
+                >
+                    {progress}
+                    <span className="text-6xl md:text-8xl ml-2">%</span>
+                </motion.div>
 
-                <motion.svg width="120" height="120" viewBox="0 0 100 100" className="relative z-10">
-                    <motion.path
-                        style={{ fill: 'var(--accent)' }}
-                        initial={{ d: morphPaths[0] }}
-                        animate={{ d: morphPaths }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            times: [0, 0.33, 0.66, 1]
+                {!isExploding && progress > 30 && (
+                    <motion.div
+                        className="absolute w-[120%] h-2 bg-white -rotate-6 mix-blend-overlay"
+                        initial={{ opacity: 0, scaleX: 0 }}
+                        animate={{
+                            opacity: [0, 1, 0],
+                            scaleX: [0, 1, 0.5, 1],
+                            y: [-20, 20, -10, 30]
                         }}
+                        transition={{ repeat: Infinity, duration: 0.3 }}
                     />
-                </motion.svg>
+                )}
             </div>
-
-            <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 0.5, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="mt-12 font-mono text-[10px] uppercase tracking-[0.6em]"
-                style={{ color: 'var(--text-main)' }}
-            >
-                Loading System
-            </motion.p>
         </motion.div>
     );
 };
@@ -64,30 +106,39 @@ const App = () => {
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
-        const timer = setTimeout(() => setIsLoading(false), 2000);
-        return () => clearTimeout(timer);
     }, [theme]);
 
     return (
         <>
             <AnimatePresence mode="wait">
-                {isLoading && <LoadingScreen key="manual-loader" />}
+                {isLoading && (
+                    <MobPsychoLoader
+                        key="mob-loader"
+                        onComplete={() => setIsLoading(false)}
+                    />
+                )}
             </AnimatePresence>
 
             {!isLoading && (
-                <div className="relative min-h-screen transition-colors duration-700" >
+                <motion.div
+                    initial={{ opacity: 0, filter: "brightness(2) blur(10px)" }}
+                    animate={{ opacity: 1, filter: "brightness(1) blur(0px)" }}
+                    transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                    className="relative min-h-screen transition-colors duration-700"
+                >
                     <GlobalBackground />
 
                     <div className="relative z-10">
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/gallery/:id" element={<GalleryDetail />} />
                         </Routes>
                     </div>
-                </div>
+                </motion.div>
             )}
         </>
     );
 };
 
 export default App;
+
+

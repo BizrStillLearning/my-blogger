@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Github, Linkedin, Twitter, Download, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Instagram, Download, ExternalLink } from 'lucide-react';
 
 import ProfileImg from '../assets/img/Profile.png';
 
@@ -40,7 +40,8 @@ const Hero = () => {
                             <div className="w-full h-full rounded-full overflow-hidden border border-white/10">
                                 <img
                                     src={ProfileImg}
-                                    alt="Abidzar Dzakwan"
+                                    alt="Abidzar Dzakwan Profile"
+                                    fetchPriority="high"
                                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                                 />
                             </div>
@@ -54,18 +55,16 @@ const Hero = () => {
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="mb-4">
-                        <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-bold tracking-tighter leading-[0.75] transition-colors duration-700" style={{ color: 'var(--text-main)' }}>
-                            Abidzar Dzakwan
-                        </h1>
-                        <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-bold tracking-tighter leading-[0.75] transition-colors duration-700" style={{ color: 'var(--text-main)' }}>
-                            Sahudi
+                        <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-bold tracking-tighter leading-[0.85] transition-colors duration-700 flex flex-col" style={{ color: 'var(--text-main)' }}>
+                            <span>Abidzar Dzakwan</span>
+                            <span>Sahudi</span>
                         </h1>
                     </motion.div>
 
-                    <motion.h3 variants={itemVariants} className="text-3xl md:text-6xl font-black mb-10 tracking-tight transition-all duration-1000"
+                    <motion.h2 variants={itemVariants} className="text-3xl md:text-6xl font-black mb-10 tracking-tight transition-all duration-1000"
                                style={{ color: 'var(--accent)', textShadow: `0 0 30px var(--accent)` }}>
                         {t('hero.role')}
-                    </motion.h3>
+                    </motion.h2>
 
                     <motion.p variants={itemVariants} className="text-sm md:text-xl italic max-w-xl mb-14 font-light leading-relaxed opacity-60 transition-colors duration-700" style={{ color: 'var(--text-main)' }}>
                         {t('hero.description')}
@@ -73,11 +72,18 @@ const Hero = () => {
 
                     <motion.div variants={itemVariants} className="flex gap-8 mb-14">
                         {[
-                            { icon: Github, link: "https://github.com/kaizerdev" },
-                            { icon: Linkedin, link: "#" },
-                            { icon: Twitter, link: "#" }
+                            { icon: Github, link: "https://github.com/BizrStillLearning", label: "GitHub" },
+                            { icon: Linkedin, link: "https://www.linkedin.com/in/abidzar-dzakwan-sahudi-011593388/", label: "LinkedIn" },
+                            { icon: Instagram, link: "https://www.instagram.com/bizrrr_ae/", label: "Instagram" }
                         ].map((item, idx) => (
-                            <motion.a key={idx} href={item.link} whileHover={{ y: -8, scale: 1.2, color: 'var(--accent)' }} className="transition-all duration-300" style={{ color: 'var(--text-main)' }}>
+                            <motion.a
+                                key={idx}
+                                href={item.link}
+                                aria-label={item.label}
+                                whileHover={{ y: -8, scale: 1.2, color: 'var(--accent)' }}
+                                className="transition-all duration-300"
+                                style={{ color: 'var(--text-main)' }}
+                            >
                                 <item.icon size={28} />
                             </motion.a>
                         ))}
@@ -93,10 +99,7 @@ const Hero = () => {
                             }}
                             whileTap={{ scale: 0.95 }}
                             className="px-12 py-4 rounded-full font-bold flex items-center gap-3 transition-all duration-500 shadow-xl cursor-pointer"
-                            style={{
-                                backgroundColor: 'var(--text-main)',
-                                color: 'var(--bg-main)'
-                            }}
+                            style={{ backgroundColor: 'var(--text-main)', color: 'var(--bg-main)' }}
                         >
                             {t('hero.btnWork')} <ExternalLink size={20} />
                         </motion.button>
@@ -110,11 +113,7 @@ const Hero = () => {
                             }}
                             whileTap={{ scale: 0.95 }}
                             className="border-2 px-12 py-4 rounded-full font-bold flex items-center gap-3 backdrop-blur-sm transition-all duration-500 cursor-pointer"
-                            style={{
-                                borderColor: 'var(--text-main)',
-                                color: 'var(--text-main)',
-                                backgroundColor: 'transparent'
-                            }}
+                            style={{ borderColor: 'var(--text-main)', color: 'var(--text-main)', backgroundColor: 'transparent' }}
                         >
                             {t('hero.btnCv')} <Download size={20} />
                         </motion.button>

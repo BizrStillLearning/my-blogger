@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
     en: {
         translation: {
-            navHome: 'Home', navAbout: 'About', navTimeline: 'Timeline', navHobby: 'Hobby', navGallery: 'Gallery',
+            navHome: 'Home', navAbout: 'About', navTech: 'Technologies', navTimeline: 'Timeline', navHobby: 'Hobby', navGallery: 'Gallery',
             selectTheme: 'Select Theme', language: 'Language',
             hero: {
                 badge: 'Visionary Full Stack Developer',
@@ -19,17 +19,25 @@ const resources = {
                 btnDetail: 'Detail about me', location: 'Surabaya, ID', listening: 'Spotify', gaming: 'Gaming', movie: 'Cinema',
                 values: { philosophy: 'Philosophy', discipline: 'Discipline', fuel: 'Fuel', caffeine: 'Caffeine', state: 'State', relentless: 'Relentless' },
             },
+            techStack: {
+              title: 'Core',
+                Highlight: 'Tech Stack',
+                badge: 'system.env',
+            },
             timeline: {
                 title: 'Life', titleHighlight: 'Journey',
                 items: {
                     item1: {
-                        year: '2021 - 2024', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: 'Vocational High School',
+                        year: '2022 - 2025', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: 'Vocational High School',
+
                         description: 'SMK TI alumnus in Jombang. Spent 3 years in an Islamic Boarding School that built high discipline and strong IT fundamentals.',
+                        location: 'Jombang, Jawa Timur',
                         tags: ['Informatics', 'Boarding School']
                     },
                     item2: {
-                        year: '2024 - Present', title: 'Informatics Student', subtitle: 'Universitas Muhammadiyah Surabaya',
+                        year: '2025 - Present', title: 'Informatics Student', subtitle: 'Universitas Muhammadiyah Surabaya',
                         description: 'Informatics student focusing on Web Development, AI, and Robotics. Building a foundation for scalable systems.',
+                        location: 'Surabaya, Jawa Timur',
                         tags: ['Academic', 'Full Stack']
                     }
                 }
@@ -58,13 +66,13 @@ const resources = {
                 desc: "Crafted for high-performance digital experiences. Based in Surabaya, Indonesia.",
                 directories: "Directories",
                 status: { title: "Status", running: "Running", region: "Region", uptime: "Uptime" },
-                jumpTop: "Jump_Top"
+                jumpTop: "Back To Top"
             }
         },
     },
     id: {
         translation: {
-            navHome: 'Beranda', navAbout: 'Tentang', navTimeline: 'Riwayat', navHobby: 'Hobi', navGallery: 'Galeri',
+            navHome: 'Beranda', navAbout: 'Tentang', navTech: 'Teknologi', navTimeline: 'Riwayat', navHobby: 'Hobi', navGallery: 'Galeri',
             selectTheme: 'Pilih Tema', language: 'Bahasa',
             hero: {
                 badge: 'Full Stack Developer Visioner',
@@ -80,16 +88,18 @@ const resources = {
                 values: { philosophy: 'Filosofi', discipline: 'Disiplin', fuel: 'Energi', caffeine: 'Kafein', state: 'Prinsip', relentless: 'Tanpa Henti' },
             },
             timeline: {
-                title: 'Perjalanan', titleHighlight: 'Hidup',
+                title: "Perjalanan", titleHighlight: "Hidup",
                 items: {
                     item1: {
-                        year: '2021 - 2024', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: 'Sekolah Menengah Kejuruan',
-                        description: 'Alumni SMK TI di Jombang. Menjalani 3 tahun di Pondok Pesantren yang membentuk kedisiplinan tinggi dan fundamental IT yang kuat.',
+                        year: "2022 - 2025", title: "SMK TI Annajiyah Bahrul Ulum", subtitle: "Sekolah Menengah Kejuruan",
+                        description: "Alumni SMK TI di Jombang. Menjalani 3 tahun di Pondok Pesantren yang membentuk kedisiplinan tinggi dan fundamental IT yang kuat.",
+                        location: 'Jombang, Jawa Timur',
                         tags: ['Informatika', 'Pondok Pesantren']
                     },
                     item2: {
-                        year: '2024 - Sekarang', title: 'Mahasiswa Informatika', subtitle: 'Universitas Muhammadiyah Surabaya',
-                        description: 'Mahasiswa Informatika yang fokus pada Web Development, AI, dan Robotics. Membangun fondasi sistem yang skalabel.',
+                        year: "2025 - Sekarang", title: "Mahasiswa Informatika", subtitle: "Universitas Muhammadiyah Surabaya",
+                        description: "Mahasiswa Informatika yang fokus pada Web Development, AI, dan Robotics. Membangun fondasi sistem yang skalabel.",
+                        location: 'Surabaya, Jawa Timur',
                         tags: ['Akademik', 'Full Stack']
                     }
                 }
@@ -118,13 +128,13 @@ const resources = {
                 desc: "Dirancang untuk pengalaman digital berkinerja tinggi. Berbasis di Surabaya, Indonesia.",
                 directories: "Direktori",
                 status: { title: "Status", running: "Berjalan", region: "Wilayah", uptime: "Waktu Aktif" },
-                jumpTop: "Kembali_Atas"
+                jumpTop: "Kembali Ke Atas"
             }
         },
     },
     jp: {
         translation: {
-            navHome: 'ホーム', navAbout: '私について', navTimeline: 'タイムライン', navHobby: '趣味', navGallery: 'ギャラリー',
+            navHome: 'ホーム', navAbout: '私について', navTech: 'テクノロジー', navTimeline: 'タイムライン', navHobby: '趣味', navGallery: 'ギャラリー',
             selectTheme: 'テーマ選択', language: '言語',
             hero: {
                 badge: 'ビジョナリー フルスタック開発者',
@@ -143,13 +153,15 @@ const resources = {
                 title: '私の', titleHighlight: '道のり',
                 items: {
                     item1: {
-                        year: '2021 - 2024', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: '職業高校',
+                        year: '2022 - 2025', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: '職業高校',
                         description: 'ジョンバンにあるSMK TIの卒業生。イスラム寄宿学校での3年間は、高い規律と強力なITの基礎を築きました。',
+                        location: '東ジャワ州ジョムバン',
                         tags: ['情報学', '寄宿学校']
                     },
                     item2: {
-                        year: '2024 - 現在', title: '情報学部の学生', subtitle: 'ムハマディヤ・スラバヤ大学',
+                        year: '2025 - 現在', title: '情報学部の学生', subtitle: 'ムハマディヤ・スラバヤ大学',
                         description: 'Web開発、AI、ロボット工学に焦点を当てた情報学部の学生。スケーラブルなシステムの基盤を構築しています。',
+                        location: '東ジャワ州スラバヤ',
                         tags: ['学術', 'フルスタック']
                     }
                 }
@@ -178,13 +190,13 @@ const resources = {
                 desc: "高性能なデジタル体験のために作られました。インドネシア、スラバヤ拠点。",
                 directories: "ディレクトリ",
                 status: { title: "ステータス", running: "稼働中", region: "地域", uptime: "稼働時間" },
-                jumpTop: "トップへ"
+                jumpTop: "トップに戻る"
             }
         },
     },
     ko: {
         translation: {
-            navHome: '홈', navAbout: '소개', navTimeline: '타임라인', navHobby: '취미', navGallery: '갤러리',
+            navHome: '홈', navAbout: '소개', navTech: '기술', navTimeline: '타임라인', navHobby: '취미', navGallery: '갤러리',
             selectTheme: '테마 선택', language: '언어',
             hero: {
                 badge: '비저너리 풀스택 개발자',
@@ -203,13 +215,15 @@ const resources = {
                 title: '나의', titleHighlight: '여정',
                 items: {
                     item1: {
-                        year: '2021 - 2024', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: '직업 고등학교',
+                        year: '2022 - 2025', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: '직업 고등학교',
                         description: '좀방에 있는 SMK TI 졸업생. 이슬람 기숙 학교에서의 3년은 높은 규율과 강력한 IT 기초를 형성했습니다.',
+                        location: '좀방, 동부 자바',
                         tags: ['정보학', '기숙 학교']
                     },
                     item2: {
-                        year: '2024 - 현재', title: '정보학 전공 학생', subtitle: '무함마디야 수라바야 대학교',
+                        year: '2025 - 현재', title: '정보학 전공 학생', subtitle: '무함마디야 수라바야 대학교',
                         description: '웹 개발, AI 및 로봇 공학에 중점을 둔 정보학 학생. 확장 가능한 시스템의 기반을 구축합니다.',
+                        location: '수라바야, 동부 자바',
                         tags: ['학술', '풀스택']
                     }
                 }
@@ -244,7 +258,7 @@ const resources = {
     },
     zh: {
         translation: {
-            navHome: '首页', navAbout: '关于我', navTimeline: '时间线', navHobby: '爱好', navGallery: '画廊',
+            navHome: '首页', navAbout: '关于我', navTech: '技术', navTimeline: '时间线', navHobby: '爱好', navGallery: '画廊',
             selectTheme: '选择主题', language: '语言',
             hero: {
                 badge: '富有远见的全栈开发者',
@@ -263,13 +277,15 @@ const resources = {
                 title: '我的', titleHighlight: '旅程',
                 items: {
                     item1: {
-                        year: '2021 - 2024', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: '职业高中',
+                        year: '2022 - 2025', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: '职业高中',
                         description: 'Jombang SMK TI 校友。在伊斯兰寄宿学校的三年培养了高度的纪律性和强大的 IT 基础。',
+                        location: '东爪哇省 琼邦',
                         tags: ['信息学', '寄宿学校']
                     },
                     item2: {
-                        year: '2024 - 至今', title: '信息学学生', subtitle: '泗水穆罕默迪亚大学',
+                        year: '2025 - 至今', title: '信息学学生', subtitle: '泗水穆罕默迪亚大学',
                         description: '专注于 Web 开发、AI 和机器人的信息学学生。构建可扩展系统的基础。',
+                        location: '东爪哇省泗水',
                         tags: ['学术', '全栈']
                     }
                 }
@@ -298,13 +314,13 @@ const resources = {
                 desc: "为高性能数字体验而打造。总部位于印度尼西亚泗水。",
                 directories: "目录",
                 status: { title: "状态", running: "运行中", region: "区域", uptime: "运行时间" },
-                jumpTop: "回到顶部"
+                jumpTop: "맨 위로 돌아가기"
             }
         },
     },
     ar: {
         translation: {
-            navHome: 'الرئيسية', navAbout: 'حول', navTimeline: 'الخط الزمني', navHobby: 'هواية', navGallery: 'معرض الصور',
+            navHome: 'الرئيسية', navAbout: 'حول', navTech:'التقنيات\n', navTimeline: 'الخط الزمني', navHobby: 'هواية', navGallery: 'معرض الصور',
             selectTheme: 'اختر السمة', language: 'اللغة',
             hero: {
                 badge: 'مطور فُل ستاك ذو رؤية',
@@ -323,13 +339,15 @@ const resources = {
                 title: 'رحلة', titleHighlight: 'حياتي',
                 items: {
                     item1: {
-                        year: '2021 - 2024', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: 'مدرسة مهنية',
+                        year: '2022 - 2025', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: 'مدرسة مهنية',
                         description: 'خريج SMK TI في جومبانج. أمضيت 3 سنوات في مدرسة داخلية إسلامية شكلت انضباطاً عالياً وأساسيات قوية في تكنولوجيا المعلومات.',
+                        location: 'جومبانج، جاوة الشرقية\n',
                         tags: ['المعلوماتية', 'مدرسة داخلية']
                     },
                     item2: {
-                        year: '2024 - الحاضر', title: 'طالب معلوماتية', subtitle: 'جامعة المحمدية سورابايا',
+                        year: '2025 - الحاضر', title: 'طالب معلوماتية', subtitle: 'جامعة المحمدية سورابايا',
                         description: 'طالب معلوماتية يركز على تطوير الويب والذكاء الاصطناعي والروبوتات. بناء أساس للأنظمة القابلة للتطوير.',
+                        location: 'سورابايا، جاوة الشرقية\n',
                         tags: ['أكاديمي', 'فُل ستاك']
                     }
                 }
@@ -358,18 +376,18 @@ const resources = {
                 desc: "مصمم لتجارب رقمية عالية الأداء. مقرنا في سورابايا، إندونيسيا.",
                 directories: "الدلائل",
                 status: { title: "الحالة", running: "قيد التشغيل", region: "المنطقة", uptime: "وقت التشغيل" },
-                jumpTop: "العودة للأعلى"
+                jumpTop: "العودة إلى الأعلى"
             }
         },
     },
     es: {
         translation: {
-            navHome: 'Inicio', navAbout: 'Acerca de', navTimeline: 'Cronología', navHobby: 'Pasatiempo', navGallery: 'Galería',
+            navHome: 'Inicio', navAbout: 'Acerca de', navTech: 'Tecnologías', navTimeline: 'Cronología', navHobby: 'Pasatiempo', navGallery: 'Galería',
             selectTheme: 'Seleccionar Tema', language: 'Idioma',
             hero: {
                 badge: 'Desarrollador Full Stack Visionario',
                 role: 'Desarrollador Full Stack',
-                description: '"Ingeniero Full Stack Intermedio y Arquitecto de Sistemas que crea soluciones escalables de extremo a extremo."',
+                description: '"Ingeniero Full Stack Intermedio y Arquxitecto de Sistemas que crea soluciones escalables de extremo a extremo."',
                 btnWork: 'Ver mi trabajo', btnCv: 'Ver CV',
             },
             about: {
@@ -383,13 +401,15 @@ const resources = {
                 title: 'Mi', titleHighlight: 'Viaje',
                 items: {
                     item1: {
-                        year: '2021 - 2024', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: 'Escuela Secundaria Vocacional',
+                        year: '2022 - 2025', title: 'SMK TI Annajiyah Bahrul Ulum', subtitle: 'Escuela Secundaria Vocacional',
                         description: 'Exalumno de SMK TI en Jombang. Pasé 3 años en un internado islámico que forjó una alta disciplina y sólidos fundamentos en TI.',
+                        location: 'Jombang, Java Oriental',
                         tags: ['Informática', 'Internado']
                     },
                     item2: {
-                        year: '2024 - Presente', title: 'Estudiante de Informática', subtitle: 'Universidad Muhammadiyah de Surabaya',
+                        year: '2025 - Presente', title: 'Estudiante de Informática', subtitle: 'Universidad Muhammadiyah de Surabaya',
                         description: 'Estudiante de informática centrado en desarrollo web, IA y robótica. Construyendo bases para sistemas escalables.',
+                        location: 'Surabaya, Java Oriental',
                         tags: ['Académico', 'Full Stack']
                     }
                 }
@@ -418,7 +438,7 @@ const resources = {
                 desc: "Creado para experiencias digitales de alto rendimiento. Con sede en Surabaya, Indonesia.",
                 directories: "Directorios",
                 status: { title: "Estado", running: "En ejecución", region: "Región", uptime: "Tiempo de actividad" },
-                jumpTop: "Ir arriba"
+                jumpTop: "Volver arriba"
             }
         },
     },
@@ -430,7 +450,10 @@ i18n
         resources,
         lng: 'en',
         fallbackLng: 'en',
-        interpolation: { escapeValue: false },
+        interpolation: {
+            escapeValue: false
+        },
     });
 
 export default i18n;
+
