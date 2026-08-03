@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Github, Linkedin, Instagram, Download, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Instagram, ArrowDown, ExternalLink } from 'lucide-react';
 
 import ProfileImg from '../assets/img/Profile.png';
 
@@ -49,11 +49,6 @@ const Hero = () => {
                         <div className="absolute bottom-3 right-3 w-6 h-6 bg-green-500 rounded-full border-4 transition-colors duration-700 shadow-lg animate-pulse" style={{ borderColor: 'var(--bg-main)' }}></div>
                     </motion.div>
 
-                    <motion.div variants={itemVariants} className="px-6 py-1.5 rounded-full border mb-8 backdrop-blur-md text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] transition-all"
-                                style={{ borderColor: 'var(--accent)', color: 'var(--accent)', backgroundColor: 'rgba(255, 255, 255, 0.02)' }}>
-                        {t('hero.badge')}
-                    </motion.div>
-
                     <motion.div variants={itemVariants} className="mb-4">
                         <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-bold tracking-tighter leading-[0.85] transition-colors duration-700 flex flex-col" style={{ color: 'var(--text-main)' }}>
                             <span>Abidzar Dzakwan</span>
@@ -79,6 +74,8 @@ const Hero = () => {
                             <motion.a
                                 key={idx}
                                 href={item.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 aria-label={item.label}
                                 whileHover={{ y: -8, scale: 1.2, color: 'var(--accent)' }}
                                 className="transition-all duration-300"
@@ -90,7 +87,10 @@ const Hero = () => {
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-5">
-                        <motion.button
+                        <motion.a
+                            href="https://myportofolio.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             whileHover={{
                                 scale: 1.05,
                                 boxShadow: `0 0 30px var(--accent)`,
@@ -101,10 +101,11 @@ const Hero = () => {
                             className="px-12 py-4 rounded-full font-bold flex items-center gap-3 transition-all duration-500 shadow-xl cursor-pointer"
                             style={{ backgroundColor: 'var(--text-main)', color: 'var(--bg-main)' }}
                         >
-                            {t('hero.btnWork')} <ExternalLink size={20} />
-                        </motion.button>
+                            {t('hero.btnWork', 'Main Portfolio')} <ExternalLink size={20} />
+                        </motion.a>
 
-                        <motion.button
+                        <motion.a
+                            href="#about"
                             whileHover={{
                                 scale: 1.05,
                                 backgroundColor: 'rgba(var(--accent-rgb), 0.1)',
@@ -115,8 +116,8 @@ const Hero = () => {
                             className="border-2 px-12 py-4 rounded-full font-bold flex items-center gap-3 backdrop-blur-sm transition-all duration-500 cursor-pointer"
                             style={{ borderColor: 'var(--text-main)', color: 'var(--text-main)', backgroundColor: 'transparent' }}
                         >
-                            {t('hero.btnCv')} <Download size={20} />
-                        </motion.button>
+                            {t('hero.btnExplore', 'Explore Journey')} <ArrowDown size={20} />
+                        </motion.a>
                     </motion.div>
 
                 </motion.div>

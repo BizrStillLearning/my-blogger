@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import { useConfigStore } from './store/useConfigStore';
 import Home from '../src/views/Home';
 import { motion, AnimatePresence } from 'framer-motion';
+
+import Navbar from "./components/Navbar.jsx";
 import GlobalBackground from "./components/GlobalBackground.jsx";
 
 const MobPsychoLoader = ({ onComplete }) => {
@@ -120,25 +122,27 @@ const App = () => {
             </AnimatePresence>
 
             {!isLoading && (
-                <motion.div
-                    initial={{ opacity: 0, filter: "brightness(2) blur(10px)" }}
-                    animate={{ opacity: 1, filter: "brightness(1) blur(0px)" }}
-                    transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                    className="relative min-h-screen transition-colors duration-700"
-                >
+                <div className="relative min-h-screen transition-colors duration-700 overflow-hidden">
                     <GlobalBackground />
 
-                    <div className="relative z-10">
+                    <Navbar />
+
+                    <motion.div
+                        initial={{ opacity: 0, filter: "brightness(2) blur(10px)" }}
+                        animate={{ opacity: 1, filter: "brightness(1) blur(0px)" }}
+                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                        transitionEnd={{ filter: "none", transform: "none" }}
+                        className="w-full"
+                    >
                         <Routes>
                             <Route path="/" element={<Home />} />
                         </Routes>
-                    </div>
-                </motion.div>
+                    </motion.div>
+                </div>
             )}
         </>
     );
 };
 
 export default App;
-
 

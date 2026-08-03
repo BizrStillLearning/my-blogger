@@ -95,17 +95,17 @@ const Navbar = () => {
     return (
         <motion.div
             variants={containerVariants} initial="hidden" animate="visible"
-            className="fixed top-0 left-0 right-0 z-[100] flex justify-center pointer-events-none"
+            className="fixed top-0 left-0 right-0 z-40 flex justify-center pointer-events-none"
             style={{ paddingTop: scrolled ? '1.5rem' : '0rem', transition: 'padding 0.8s cubic-bezier(0.23, 1, 0.32, 1)' }}
         >
             <nav
                 className={
-                `pointer-events-auto mx-auto flex items-center justify-between border-none transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] 
+                    `pointer-events-auto mx-auto flex items-center justify-between border-none transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] 
                 ${
-                    scrolled
-                        ? 'w-[92%] max-w-[1100px] rounded-[2.5rem] px-6 py-2 shadow-2xl ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-xl bg-white/70 dark:bg-slate-900/80'
-                        : 'w-full max-w-full rounded-none px-6 md:px-10 py-6 shadow-none backdrop-blur-0 bg-transparent'
-                }`}
+                        scrolled
+                            ? 'w-[92%] max-w-[1100px] rounded-[2.5rem] px-6 py-2 shadow-2xl ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-xl bg-white/70 dark:bg-slate-900/80'
+                            : 'w-full max-w-full rounded-none px-6 md:px-10 py-6 shadow-none backdrop-blur-0 bg-transparent'
+                    }`}
                 style={{ backgroundColor: scrolled ? 'var(--nav-bg)' : 'transparent', willChange: 'width, max-width, padding' }}
             >
                 <motion.div variants={itemVariants} className="flex items-center gap-2 cursor-pointer group shrink-0">
@@ -201,7 +201,7 @@ const Navbar = () => {
                     {isMobileMenuOpen && (
                         <motion.div
                             initial={{ opacity: 0, y: -20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -20, scale: 0.95 }} transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                            className="absolute top-full left-0 right-0 mt-4 md:hidden backdrop-blur-2xl rounded-[2rem] p-6 shadow-2xl z-[150] border-none mx-4" style={{ backgroundColor: 'var(--nav-bg)' }}
+                            className="absolute top-full left-0 right-0 mt-4 md:hidden backdrop-blur-3xl rounded-[2rem] p-5 sm:p-6 shadow-2xl z-50 border border-black/5 dark:border-white/10 max-h-[80vh] overflow-y-auto custom-scrollbar" style={{ backgroundColor: 'var(--nav-bg)' }}
                         >
                             <div className="flex flex-col space-y-6">
                                 <div className="flex flex-col space-y-1">
@@ -210,7 +210,7 @@ const Navbar = () => {
                                         return (
                                             <a
                                                 key={link.name} href={link.href} onClick={() => setIsMobileMenuOpen(false)}
-                                                className={`px-4 py-3 font-semibold rounded-2xl transition-all text-lg text-center cursor-pointer ${isActive ? 'bg-white/10 font-bold' : 'opacity-80'}`}
+                                                className={`px-4 py-3 font-semibold rounded-2xl transition-all text-base sm:text-lg text-center cursor-pointer ${isActive ? 'bg-white/10 font-bold' : 'opacity-80'}`}
                                                 style={{ color: isActive ? 'var(--accent)' : 'var(--text-main)' }}
                                             >
                                                 {link.name}
@@ -222,7 +222,7 @@ const Navbar = () => {
                                 <div className="pt-6 border-t border-black/5 dark:border-white/10 flex flex-col items-center gap-6">
                                     <div className="flex flex-col items-center gap-3 w-full">
                                         <p className="text-[10px] uppercase font-bold tracking-widest opacity-50" style={{ color: 'var(--text-main)' }}>{t('selectTheme')}</p>
-                                        <div className="flex justify-center gap-5">
+                                        <div className="flex justify-center gap-4 sm:gap-5">
                                             {themes.map((t) => (
                                                 <button key={t.id} onClick={() => { setTheme(t.id); setIsMobileMenuOpen(false); }} className={`w-9 h-9 rounded-full border shadow-inner transition-all cursor-pointer ${t.color} ${theme === t.id ? 'ring-2 ring-blue-600 ring-offset-2 scale-110 shadow-lg' : 'opacity-60 active:scale-90'}`} />
                                             ))}
@@ -231,10 +231,10 @@ const Navbar = () => {
 
                                     <div className="flex flex-col items-center gap-3 w-full">
                                         <p className="text-[10px] uppercase font-bold tracking-widest opacity-50" style={{ color: 'var(--text-main)' }}>{t('language')}</p>
-                                        <div className="grid grid-cols-4 gap-3 w-full px-2">
+                                        <div className="flex flex-wrap justify-center gap-3 w-full px-2">
                                             {languages.map((l) => (
                                                 <button key={l.code} onClick={() => handleLangChange(l.code)}
-                                                        className={`py-3 px-1 rounded-xl transition-all active:scale-95 flex items-center justify-center cursor-pointer ${currentLang === l.code ? 'bg-blue-600 shadow-md ring-2 ring-blue-400' : 'bg-black/5 dark:bg-white/5'}`}
+                                                        className={`py-3 px-4 rounded-xl transition-all active:scale-95 flex items-center justify-center cursor-pointer ${currentLang === l.code ? 'bg-blue-600 shadow-md ring-2 ring-blue-400' : 'bg-black/5 dark:bg-white/5'}`}
                                                 >
                                                     <div className="w-7 h-5 flex items-center justify-center overflow-hidden rounded-sm shadow-inner border border-white/10">
                                                         <ReactCountryFlag countryCode={l.flagCode} svg style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
