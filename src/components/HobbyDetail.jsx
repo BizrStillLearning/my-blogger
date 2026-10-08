@@ -165,11 +165,26 @@ const HobbyDetail = ({ isOpen, onClose, hobbyId }) => {
                                             <h4 className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--text-main)', opacity: 0.7 }}>
                                                 {t('hobbyMusic.recentlyPlayed')}
                                             </h4>
-                                            <div className="w-full rounded-2xl overflow-hidden border p-2" style={{ borderColor: 'rgba(var(--text-main-rgb), 0.1)', backgroundColor: '#0a0a0a' }}>
-                                                <ImageWithLoader src="https://spotify-recently-played-readme.vercel.app/api?user=31syxwnrvuff6jujdk7xwn6gdawm&count=5" alt="Spotify Currently Playing" className="w-full h-auto opacity-90 hover:opacity-100 transition-opacity" />
+
+                                            <div className="w-full rounded-2xl overflow-hidden border p-4 flex flex-col gap-4" style={{ borderColor: 'rgba(var(--text-main-rgb), 0.1)', backgroundColor: '#0a0a0a' }}>
+
+                                                <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" className="w-full hover:opacity-80 transition-opacity">
+                                                    <img src="https://spotify-github-stats.vercel.app/api/now-playing?user=Bizr86&theme=synthwave&border=false" alt="Now Playing" className="w-full h-auto rounded-lg" />
+                                                </a>
+
+                                                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                                                    <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" className="flex-1 hover:opacity-80 transition-opacity">
+                                                        <img src="https://spotify-github-stats.vercel.app/api/recent?user=Bizr86&theme=synthwave&border=false" alt="Recently Played" className="w-full h-auto rounded-lg" />
+                                                    </a>
+                                                    <a href="https://www.last.fm/user/Bizr86/library/albums" target="_blank" rel="noopener noreferrer" className="flex-[0.7] hover:opacity-80 transition-opacity">
+                                                        <img src="https://spotify-github-stats.vercel.app/api/top-albums?user=Bizr86&theme=synthwave&border=false" alt="Top Albums" className="w-full h-auto rounded-lg" />
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </div>
 
+                                        {/* Mengembalikan Top Artists yang sempat terhapus di prompt */}
                                         <div>
                                             <h4 className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--text-main)', opacity: 0.7 }}>
                                                 {t('hobbyMusic.topArtists')}
@@ -198,33 +213,6 @@ const HobbyDetail = ({ isOpen, onClose, hobbyId }) => {
                                             </div>
                                         </div>
 
-                                        <div>
-                                            <h4 className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--text-main)', opacity: 0.7 }}>
-                                                {t('hobbyMusic.favoriteAlbums')}
-                                            </h4>
-                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                                <div className="relative aspect-square rounded-xl border overflow-hidden group" style={{ borderColor: 'rgba(var(--text-main-rgb), 0.1)', backgroundColor: '#0a0a0a' }}>
-                                                    <ImageWithLoader src="https://i.scdn.co/image/ab67616d0000e1a3119800c5fc88785ee3ed1524" alt="Drip - 1st Full Album by BABYMONSTER" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex items-end p-3">
-                                                        <span className="text-xs font-bold text-white line-clamp-2 leading-tight">DRIP</span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="relative aspect-square rounded-xl border overflow-hidden group" style={{ borderColor: 'rgba(var(--text-main-rgb), 0.1)', backgroundColor: '#0a0a0a' }}>
-                                                    <ImageWithLoader src="https://i.scdn.co/image/ab67616d00001e020fc598038040859794c600e2" alt="Armageddon - aespa" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex items-end p-3">
-                                                        <span className="text-xs font-bold text-white line-clamp-2 leading-tight">Armageddon</span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="relative aspect-square rounded-xl border overflow-hidden group hidden sm:block" style={{ borderColor: 'rgba(var(--text-main-rgb), 0.1)', backgroundColor: '#0a0a0a' }}>
-                                                    <ImageWithLoader src="https://i.scdn.co/image/ab67616d00001e02d179b01c0b9baac10170d1ad" alt="Heavy Serenade - NMIXX" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex items-end p-3">
-                                                        <span className="text-xs font-bold text-white line-clamp-2 leading-tight">Heavy Serenade</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 )}
 
@@ -239,4 +227,3 @@ const HobbyDetail = ({ isOpen, onClose, hobbyId }) => {
 };
 
 export default HobbyDetail;
-
