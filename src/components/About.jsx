@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo } from 'react';
+import { motion as Motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
     MapPin,
@@ -8,7 +8,11 @@ import {
     Coffee,
     BookOpen,
     Layers,
-    Code2
+    Code2,
+    CheckCircle2,
+    Terminal,
+    Sparkles,
+    ArrowUpRight
 } from 'lucide-react';
 
 const About = ({ isStandalone = false }) => {
@@ -16,272 +20,280 @@ const About = ({ isStandalone = false }) => {
     const currentLang = i18n.language || 'en';
     const isId = currentLang.startsWith('id');
 
+    const keyHighlights = useMemo(() => isId ? [
+        { id: 'backend', label: 'Sistem Terdistribusi & Backend', desc: 'Arsitektur efisien & performa tinggi' },
+        { id: 'ai', label: 'Eksplorasi AI Praktis', desc: 'Integrasi LLM & alur kerja cerdas' },
+        { id: 'pragmatic', label: 'Pragmatisme & Clean Code', desc: 'Kode ringkas, teruji, dan mudah dirawat' }
+    ] : [
+        { id: 'backend', label: 'Distributed Backend Systems', desc: 'High performance & clean architecture' },
+        { id: 'ai', label: 'Practical AI Integration', desc: 'LLM workflows & intelligent tools' },
+        { id: 'pragmatic', label: 'Pragmatic Engineering', desc: 'Clean, maintainable & tested code' }
+    ], [isId]);
+
+    const narrativeSections = useMemo(() => [
+        {
+            id: 'foundations',
+            icon: BookOpen,
+            badge: isId ? 'Latar Belakang & Kedisiplinan' : 'Foundations & Discipline',
+            title: isId ? 'Dari Pesantren ke Dunia Rekayasa Sistem' : 'From Boarding School to Systems Engineering',
+            content: [
+                t('about.p2'),
+                isId
+                    ? 'Pengalaman hidup mandiri di pondok pesantren Annajiyah Bahrul Ulum (Jombang) menanamkan kebiasaan untuk berpikir jernih di bawah tekanan, tekun membaca dokumentasi secara menyeluruh, dan tidak mudah menyerah saat menghadapi masalah teknis yang rumit.'
+                    : 'Living independently for three years at an Islamic boarding school in Jombang taught me patience and mental focus. It shaped my habit of reading technical docs deeply, diagnosing tricky edge cases calmly, and respecting the time good engineering takes.'
+            ]
+        },
+        {
+            id: 'philosophy',
+            icon: Layers,
+            badge: isId ? 'Filosofi Rekayasa' : 'Engineering Philosophy',
+            title: isId ? 'Pragmatisme, Efisiensi, & Kode yang Terbaca' : 'Pragmatism, Efficiency, & Clear Code',
+            content: [
+                isId
+                    ? 'Saya percaya bahwa kode yang baik adalah kode yang mudah dipahami rekan tim, efisien dalam pemanfaatan sumber daya memori, dan memecahkan masalah riil pengguna tanpa kompleksitas yang berlebihan. Saya lebih memilih memahami cara kerja internal sistem dan fondasi protokol daripada sekadar mengikuti tren sesaat.'
+                    : 'I value readable code, measurable memory efficiency, and architecture that solves real problems without over-engineering. Understanding protocol fundamentals and system internals always brings more enduring value than chasing fleeting framework hype.'
+            ]
+        },
+        {
+            id: 'focus',
+            icon: Code2,
+            badge: isId ? 'Fokus & Visi' : 'Focus & Direction',
+            title: isId ? 'Sistem Web, Backend, & Integrasi Kecerdasan Buatan' : 'Web Systems, Backend & AI Tooling',
+            content: [
+                t('aboutDetail.currentExplorationText'),
+                t('aboutDetail.futureGoalsText')
+            ]
+        }
+    ], [isId, t]);
+
+    const educationItems = useMemo(() => [
+        {
+            id: 'um-surabaya',
+            degree: 'S1 Teknik Informatika',
+            institution: isId ? 'UM Surabaya (2025 - Sekarang)' : 'UM Surabaya (2025 - Present)',
+            isPrimary: true
+        },
+        {
+            id: 'annajiyah',
+            degree: 'SMK TI Annajiyah Bahrul Ulum',
+            institution: 'Pesantren Tambakberas (2022 - 2025)',
+            isPrimary: false
+        }
+    ], [isId]);
+
+    const focusTags = useMemo(() => ['Full Stack', 'Backend Systems', 'React / Go', 'AI Tools'], []);
+
     return (
         <section
             id="about"
-            className={`${isStandalone ? 'pt-8 pb-20' : 'py-20 md:py-28'} relative`}
+            aria-labelledby="about-heading"
+            className={`${isStandalone ? 'pt-8 pb-20' : 'py-20 md:py-28'} relative overflow-hidden text-[var(--text-main)]`}
         >
-            <div className="container mx-auto px-6 max-w-5xl">
-                {/* Header: Clean Editorial Typography */}
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+            {/* Soft Ambient Glows */}
+            <div
+                aria-hidden="true"
+                className="absolute top-1/4 -left-32 w-96 h-96 bg-[var(--accent)]/10 rounded-full blur-3xl pointer-events-none -z-10"
+            />
+            <div
+                aria-hidden="true"
+                className="absolute bottom-10 -right-32 w-96 h-96 bg-[var(--accent)]/5 rounded-full blur-3xl pointer-events-none -z-10"
+            />
+
+            <div className="container mx-auto px-6 max-w-6xl">
+                {/* Header: Editorial & Modern Tagline */}
+                <Motion.div
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
                     className="flex flex-col space-y-4 max-w-3xl"
                 >
-                    <div className="flex items-center gap-3">
-                        <span className="w-6 h-[2px] bg-[var(--accent)] inline-block" />
-                        <span className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
-                            {isId ? '01 / Biografi & Perspektif' : '01 / Biography & Perspective'}
+                    <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/5 w-fit">
+                        <Terminal size={14} className="text-[var(--accent)] shrink-0" aria-hidden="true" />
+                        <span className="text-xs font-mono font-medium tracking-wide text-[var(--accent)]">
+                            {isId ? '01 / Profil & Filosofi' : '01 / Profile & Mindset'}
                         </span>
                     </div>
 
                     <h2
+                        id="about-heading"
                         className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.15]"
-                        style={{ color: 'var(--text-main)' }}
                     >
                         {t('about.title')}{' '}
-                        <span className="text-[var(--accent)]">{t('about.highlight', 'Me')}.</span>
+                        <span className="text-[var(--accent)] relative inline-block">
+                            {t('about.highlight', 'Me')}
+                            <span className="absolute bottom-1 left-0 w-full h-[3px] bg-[var(--accent)]/30 rounded-full" aria-hidden="true" />
+                        </span>
                     </h2>
 
-                    <p
-                        className="text-lg sm:text-xl font-normal leading-relaxed opacity-85 pt-1"
-                        style={{ color: 'var(--text-main)' }}
-                    >
+                    <p className="text-lg sm:text-xl font-normal leading-relaxed opacity-90 pt-1">
                         {t('about.p1')}
                     </p>
-                </motion.div>
+                </Motion.div>
 
-                {/* Main Split Layout: Pure Flexbox, Strictly NO CSS Grid */}
-                <div className="mt-12 md:mt-16 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+                {/* Main Content Layout */}
+                <div className="mt-12 md:mt-16 flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
                     
-                    {/* Primary Narrative Column */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
+                    {/* Left/Primary Narrative Column */}
+                    <Motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.4 }}
-                        className="flex-1 flex flex-col space-y-10 w-full"
+                        transition={{ duration: 0.45 }}
+                        className="flex-1 flex flex-col space-y-8 w-full"
                     >
-                        {/* Narrative Block 1: Background & Boarding School Discipline */}
-                        <div className="flex flex-col space-y-3">
-                            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-[var(--accent)]">
-                                <BookOpen size={14} />
-                                <span>{isId ? 'Pondasi & Karakter' : 'Foundations & Discipline'}</span>
-                            </div>
-
-                            <h3
-                                className="text-xl sm:text-2xl font-bold tracking-tight"
-                                style={{ color: 'var(--text-main)' }}
-                            >
-                                {isId
-                                    ? 'Dari Pesantren ke Dunia Rekayasa Sistem'
-                                    : 'From Boarding School to Systems Engineering'}
-                            </h3>
-
-                            <div className="flex flex-col space-y-4 text-base sm:text-[17px] leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
-                                <p>{t('about.p2')}</p>
-                                <p>
-                                    {isId
-                                        ? 'Pengalaman hidup mandiri di pondok pesantren Annajiyah Bahrul Ulum (Jombang) menanamkan kebiasaan untuk berpikir jernih di bawah tekanan, tekun membaca dokumentasi secara menyeluruh, dan tidak mudah menyerah saat menghadapi masalah teknis yang rumit.'
-                                        : 'Living independently for three years at an Islamic boarding school in Jombang taught me patience and mental focus. It shaped my habit of reading technical docs deeply, diagnosing tricky edge cases calmly, and respecting the time good engineering takes.'}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="h-[1px] w-full bg-[var(--text-main)]/10" />
-
-                        {/* Narrative Block 2: Engineering Philosophy */}
-                        <div className="flex flex-col space-y-3">
-                            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-[var(--accent)]">
-                                <Layers size={14} />
-                                <span>{isId ? 'Filosofi Rekayasa' : 'Engineering Philosophy'}</span>
-                            </div>
-
-                            <h3
-                                className="text-xl sm:text-2xl font-bold tracking-tight"
-                                style={{ color: 'var(--text-main)' }}
-                            >
-                                {isId
-                                    ? 'Pragmatisme, Efisiensi, & Kode yang Terbaca'
-                                    : 'Pragmatism, Efficiency, & Clear Code'}
-                            </h3>
-
-                            <p className="text-base sm:text-[17px] leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
-                                {isId
-                                    ? 'Saya percaya bahwa kode yang baik adalah kode yang mudah dipahami rekan tim, efisien dalam pemanfaatan sumber daya memori, dan memecahkan masalah riil pengguna tanpa kompleksitas yang berlebihan. Saya lebih memilih memahami cara kerja internal sistem dan fondasi protokol daripada sekadar mengikuti tren sesaat.'
-                                    : 'I value readable code, measurable memory efficiency, and architecture that solves real problems without over-engineering. Understanding protocol fundamentals and system internals always brings more enduring value than chasing fleeting framework hype.'}
-                            </p>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="h-[1px] w-full bg-[var(--text-main)]/10" />
-
-                        {/* Narrative Block 3: Current Exploration */}
-                        <div className="flex flex-col space-y-3">
-                            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-[var(--accent)]">
-                                <Code2 size={14} />
-                                <span>{isId ? 'Eksplorasi Saat Ini' : 'Current Exploration'}</span>
-                            </div>
-
-                            <h3
-                                className="text-xl sm:text-2xl font-bold tracking-tight"
-                                style={{ color: 'var(--text-main)' }}
-                            >
-                                {isId
-                                    ? 'Integrasi Web, Sistem Backend, & Kecerdasan Buatan'
-                                    : 'Web Systems, Backend Architectures, & AI Tooling'}
-                            </h3>
-
-                            <div className="flex flex-col space-y-3 text-base sm:text-[17px] leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
-                                <p>{t('aboutDetail.currentExplorationText')}</p>
-                                <p>{t('aboutDetail.futureGoalsText')}</p>
-                            </div>
-                        </div>
-
-                        {/* Core Principles: Flex layout (No Grid!) */}
-                        <div className="pt-2">
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <div className="flex-1 p-5 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02]">
-                                    <span className="text-[11px] font-mono font-semibold text-[var(--accent)] block mb-1">
-                                        01 / {isId ? 'Disiplin' : 'Discipline'}
-                                    </span>
-                                    <h4 className="text-sm font-bold mb-1.5" style={{ color: 'var(--text-main)' }}>
-                                        {isId ? 'Konsistensi Logika' : 'Consistent Logic'}
-                                    </h4>
-                                    <p className="text-xs opacity-70 leading-relaxed" style={{ color: 'var(--text-main)' }}>
-                                        {isId
-                                            ? 'Membiasakan diri memeriksa logika secara teliti dari unit terkecil hingga arsitektur menyeluruh.'
-                                            : 'Carefully validating logic from the smallest unit up to the overarching system design.'}
+                        {/* Key Highlights Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {keyHighlights.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="p-4 rounded-xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02] backdrop-blur-sm hover:border-[var(--accent)]/40 transition-colors duration-200"
+                                >
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <CheckCircle2 size={15} className="text-[var(--accent)] shrink-0" aria-hidden="true" />
+                                        <span className="text-xs font-bold truncate">
+                                            {item.label}
+                                        </span>
+                                    </div>
+                                    <p className="text-[11px] opacity-70 leading-normal pl-5">
+                                        {item.desc}
                                     </p>
                                 </div>
-
-                                <div className="flex-1 p-5 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02]">
-                                    <span className="text-[11px] font-mono font-semibold text-[var(--accent)] block mb-1">
-                                        02 / {isId ? 'Kesederhanaan' : 'Simplicity'}
-                                    </span>
-                                    <h4 className="text-sm font-bold mb-1.5" style={{ color: 'var(--text-main)' }}>
-                                        {isId ? 'Anti-Overengineering' : 'Pragmatic Design'}
-                                    </h4>
-                                    <p className="text-xs opacity-70 leading-relaxed" style={{ color: 'var(--text-main)' }}>
-                                        {isId
-                                            ? 'Solusi yang elegan adalah yang paling sederhana dan mudah dipelihara dalam jangka panjang.'
-                                            : 'The most elegant solution is straightforward, reliable, and easy to maintain over time.'}
-                                    </p>
-                                </div>
-
-                                <div className="flex-1 p-5 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02]">
-                                    <span className="text-[11px] font-mono font-semibold text-[var(--accent)] block mb-1">
-                                        03 / {isId ? 'Eksplorasi' : 'Curiosity'}
-                                    </span>
-                                    <h4 className="text-sm font-bold mb-1.5" style={{ color: 'var(--text-main)' }}>
-                                        {isId ? 'Pembelajar Aktif' : 'Continuous Growth'}
-                                    </h4>
-                                    <p className="text-xs opacity-70 leading-relaxed" style={{ color: 'var(--text-main)' }}>
-                                        {isId
-                                            ? 'Eksplorasi bahasa modern seperti Go & Rust dan integrasi AI fungsional untuk alur kerja riil.'
-                                            : 'Exploring performant languages like Go & Rust and functional AI workflows for real utility.'}
-                                    </p>
-                                </div>
-                            </div>
+                            ))}
                         </div>
 
-                    </motion.div>
+                        {/* Narrative Cards Container */}
+                        <div className="flex flex-col space-y-6">
+                            {narrativeSections.map((section) => {
+                                const IconComponent = section.icon;
+                                return (
+                                    <article
+                                        key={section.id}
+                                        className="p-6 sm:p-8 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02] hover:bg-[var(--text-main)]/[0.03] transition-all duration-300"
+                                    >
+                                        <div className="flex items-center gap-2.5 text-xs font-mono font-semibold uppercase tracking-wider text-[var(--accent)] mb-3">
+                                            <IconComponent size={16} aria-hidden="true" />
+                                            <span>{section.badge}</span>
+                                        </div>
 
-                    {/* Secondary Column: Clean Editorial Metadata Rail (Pure Flexbox) */}
-                    <motion.aside
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
+                                        <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-4">
+                                            {section.title}
+                                        </h3>
+
+                                        <div className="space-y-4 text-base leading-relaxed opacity-85">
+                                            {section.content.map((paragraph, pIdx) => (
+                                                <p key={`${section.id}-p-${pIdx}`}>{paragraph}</p>
+                                            ))}
+                                        </div>
+                                    </article>
+                                );
+                            })}
+                        </div>
+
+                    </Motion.div>
+
+                    {/* Right/Secondary Column: Structured Metadata Card */}
+                    <Motion.aside
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.08 }}
-                        className="w-full lg:w-80 shrink-0 flex flex-col space-y-6"
+                        transition={{ duration: 0.45, delay: 0.1 }}
+                        aria-label={isId ? 'Spesifikasi & Detail Utama' : 'Quick Info & Specs'}
+                        className="w-full lg:w-80 shrink-0 flex flex-col space-y-6 lg:sticky lg:top-24"
                     >
-                        <div className="p-6 sm:p-7 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02] flex flex-col space-y-6">
+                        <div className="p-6 sm:p-7 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02] backdrop-blur-md flex flex-col space-y-6">
                             
-                            {/* Metadata Item: Location */}
+                            {/* Metadata Header */}
+                            <div className="flex items-center justify-between pb-2 border-b border-[var(--text-main)]/10">
+                                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)]">
+                                    {isId ? 'Info Utama' : 'Quick Specs'}
+                                </span>
+                                <Sparkles size={14} className="text-[var(--accent)]" aria-hidden="true" />
+                            </div>
+
+                            {/* Location */}
                             <div className="flex flex-col space-y-1.5">
-                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
-                                    <MapPin size={12} />
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-60">
+                                    <MapPin size={13} aria-hidden="true" />
                                     <span>{isId ? 'Lokasi' : 'Location'}</span>
                                 </div>
-                                <span className="text-sm font-semibold" style={{ color: 'var(--text-main)' }}>
-                                    Surabaya & Jombang, Indonesia
+                                <span className="text-sm font-semibold">
+                                    Surabaya & Jombang, ID
                                 </span>
                             </div>
 
-                            <div className="h-[1px] bg-[var(--text-main)]/10" />
-
-                            {/* Metadata Item: Education */}
-                            <div className="flex flex-col space-y-1.5">
-                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
-                                    <GraduationCap size={13} />
+                            {/* Education */}
+                            <div className="flex flex-col space-y-2">
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-60">
+                                    <GraduationCap size={14} aria-hidden="true" />
                                     <span>{isId ? 'Pendidikan' : 'Education'}</span>
                                 </div>
-                                <div className="flex flex-col space-y-0.5">
-                                    <span className="text-sm font-semibold" style={{ color: 'var(--text-main)' }}>
-                                        S1 Teknik Informatika
-                                    </span>
-                                    <span className="text-xs opacity-70" style={{ color: 'var(--text-main)' }}>
-                                        Universitas Muhammadiyah Surabaya (2025 - Sekarang)
-                                    </span>
-                                </div>
-                                <div className="flex flex-col space-y-0.5 pt-1">
-                                    <span className="text-xs font-medium" style={{ color: 'var(--text-main)' }}>
-                                        SMK TI Annajiyah Bahrul Ulum
-                                    </span>
-                                    <span className="text-[11px] opacity-60" style={{ color: 'var(--text-main)' }}>
-                                        Pesantren Tambakberas Jombang (2022 - 2025)
-                                    </span>
+                                <div className="flex flex-col space-y-1">
+                                    {educationItems.map((edu) => (
+                                        <div key={edu.id} className="p-2.5 rounded-lg border border-[var(--text-main)]/5 bg-[var(--text-main)]/[0.02]">
+                                            <span className={`text-xs block ${edu.isPrimary ? 'font-bold' : 'font-semibold'}`}>
+                                                {edu.degree}
+                                            </span>
+                                            <span className="text-[11px] opacity-70 block">
+                                                {edu.institution}
+                                            </span>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
 
-                            <div className="h-[1px] bg-[var(--text-main)]/10" />
-
-                            {/* Metadata Item: Focus Areas */}
+                            {/* Focus Areas */}
                             <div className="flex flex-col space-y-1.5">
-                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
-                                    <Compass size={12} />
-                                    <span>{isId ? 'Domain Minat' : 'Primary Focus'}</span>
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-60">
+                                    <Compass size={13} aria-hidden="true" />
+                                    <span>{isId ? 'Domain Utama' : 'Primary Focus'}</span>
                                 </div>
-                                <span className="text-xs font-medium leading-relaxed opacity-85" style={{ color: 'var(--text-main)' }}>
-                                    Full Stack Web Development, Backend Architectures, Memory-efficient Systems, Practical AI Engineering.
-                                </span>
+                                <div className="flex flex-wrap gap-1.5 pt-1">
+                                    {focusTags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className="text-[11px] font-medium px-2.5 py-1 rounded-md border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.03]"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
 
-                            <div className="h-[1px] bg-[var(--text-main)]/10" />
-
-                            {/* Metadata Item: Personal Interests */}
+                            {/* Personal Interests */}
                             <div className="flex flex-col space-y-1.5">
-                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
-                                    <Coffee size={12} />
-                                    <span>{isId ? 'Di Luar Coding' : 'Beyond the Screen'}</span>
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-60">
+                                    <Coffee size={13} aria-hidden="true" />
+                                    <span>{isId ? 'Di Luar Koding' : 'Beyond Code'}</span>
                                 </div>
-                                <p className="text-xs leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
+                                <p className="text-xs leading-relaxed opacity-80">
                                     {isId
-                                        ? 'Menikmati seduhan kopi manual, apresiasi visual sinematografi/film, permainan strategi, dan musik kurasi.'
-                                        : 'Pour-over coffee, cinematography & visual storytelling, competitive strategy gaming, and curated music.'}
+                                        ? 'Kopi seduh manual, sinematografi, game strategi, & musik kurasi.'
+                                        : 'Pour-over coffee, cinematography, strategy gaming, & music.'}
                                 </p>
                             </div>
 
-                            <div className="h-[1px] bg-[var(--text-main)]/10" />
-
-                            {/* Metadata Item: Status */}
-                            <div className="flex flex-col space-y-2">
-                                <span className="text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
-                                    {isId ? 'Ketersediaan' : 'Availability'}
-                                </span>
-                                <div className="flex items-center gap-2">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                                    <span className="text-xs font-medium" style={{ color: 'var(--text-main)' }}>
-                                        {isId ? 'Terbuka untuk kolaborasi proyek' : 'Open for projects & collaboration'}
-                                    </span>
+                            {/* Availability Banner */}
+                            <div className="pt-2 border-t border-[var(--text-main)]/10">
+                                <div className="p-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <span className="relative flex h-2 w-2" aria-hidden="true">
+                                            <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                        </span>
+                                        <span className="text-xs font-semibold flex items-center gap-1">
+                                            <span className="sr-only">
+                                                {isId ? 'Status ketersediaan:' : 'Availability status:'}
+                                            </span>
+                                            {isId ? 'Terbuka Kolaborasi Proyek' : 'Open for Projects & Collaboration'}
+                                        </span>
+                                    </div>
+                                    <ArrowUpRight size={14} className="opacity-60 shrink-0" aria-hidden="true" />
                                 </div>
                             </div>
 
                         </div>
-                    </motion.aside>
+                    </Motion.aside>
 
                 </div>
             </div>

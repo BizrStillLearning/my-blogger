@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import HobbyDetail from "./HobbyDetail.jsx";
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,10 +12,10 @@ import {
 } from 'lucide-react';
 
 const hobbyConfig = [
-    { id: "coding", icon: Code2, color: "var(--accent)" },
-    { id: "gaming", icon: Gamepad2, color: "#4caf50" },
-    { id: "music", icon: Music, color: "#2196f3" },
-    { id: "film", icon: Film, color: "#f44336" }
+    { id: "coding", icon: Code2, accent: "var(--accent)" },
+    { id: "gaming", icon: Gamepad2, accent: "var(--accent)" },
+    { id: "music", icon: Music, accent: "var(--accent)" },
+    { id: "film", icon: Film, accent: "var(--accent)" }
 ];
 
 const HobbyCard = ({ data, index, onClick }) => {
@@ -23,99 +23,81 @@ const HobbyCard = ({ data, index, onClick }) => {
     const itemKey = data.id;
 
     return (
-        <div onClick={() => onClick(data.id)} className="block h-full cursor-pointer">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
+        <button
+            onClick={() => onClick(data.id)}
+            className="block h-full w-full text-left cursor-pointer group"
+            aria-label={t(`hobbySection.items.${itemKey}.title`)}
+        >
+            <Motion.div
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                whileHover={{ y: -5 }}
-                whileTap={{ scale: 0.98 }}
-                className="p-8 rounded-[2rem] border relative overflow-hidden group transition-all duration-500 h-full flex flex-col justify-between min-h-[300px]"
-                style={{
-                    borderColor: 'rgba(var(--text-main-rgb), 0.1)',
-                    backgroundColor: 'rgba(var(--text-main-rgb), 0.02)'
-                }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
+                whileHover={{ y: -4 }}
+                className="p-6 md:p-8 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02] hover:bg-[var(--text-main)]/[0.04] transition-all duration-300 h-full flex flex-col justify-between min-h-[280px]"
             >
-                <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-[0.05] transition-opacity duration-700 pointer-events-none"
-                    style={{ background: `radial-gradient(circle at top right, ${data.color}, transparent 70%)` }}
-                />
-
-                <div className="relative z-10 flex justify-between items-start mb-10">
-                    <div className="p-4 rounded-2xl shadow-sm transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110 backdrop-blur-sm border"
-                         style={{
-                             backgroundColor: `rgba(var(--bg-main-rgb), 0.5)`,
-                             borderColor: 'rgba(var(--text-main-rgb), 0.05)'
-                         }}>
-                        <data.icon size={32} style={{ color: data.color }} />
+                <div className="relative z-10 flex justify-between items-start mb-8">
+                    <div className="p-3 rounded-xl border border-[var(--text-main)]/5 bg-[var(--text-main)]/[0.02]">
+                        <data.icon size={24} className="text-[var(--accent)]" aria-hidden="true" />
                     </div>
 
-                    <div className="w-10 h-10 rounded-full border flex items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 bg-white/5"
-                         style={{ borderColor: 'rgba(var(--text-main-rgb), 0.1)' }}>
-                        <ArrowUpRight size={18} style={{ color: 'var(--text-main)' }} />
+                    <div className="flex items-center justify-center opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                        <ArrowUpRight size={18} className="text-[var(--text-main)]" aria-hidden="true" />
                     </div>
                 </div>
 
-                <div className="relative z-10 mt-auto">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Sparkles size={14} style={{ color: data.color }} className="opacity-70" />
-                        <p className="text-[10px] uppercase tracking-[0.2em] font-bold" style={{ color: data.color }}>
+                <div className="relative z-10">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Sparkles size={12} className="text-[var(--accent)] opacity-80" aria-hidden="true" />
+                        <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--accent)]">
                             {t(`hobbySection.items.${itemKey}.subtitle`)}
-                        </p>
+                        </span>
                     </div>
 
-                    <h3 className="text-xl md:text-2xl font-black tracking-tight mb-3 transition-colors duration-300"
-                        style={{ color: 'var(--text-main)' }}>
+                    <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-2 text-[var(--text-main)]">
                         {t(`hobbySection.items.${itemKey}.title`)}
                     </h3>
 
-                    <p className="text-sm leading-relaxed opacity-60 font-medium" style={{ color: 'var(--text-main)' }}>
+                    <p className="text-sm leading-relaxed opacity-70 font-medium text-[var(--text-main)]">
                         {t(`hobbySection.items.${itemKey}.description`)}
                     </p>
                 </div>
-            </motion.div>
-        </div>
+            </Motion.div>
+        </button>
     );
 };
 
 const Hobby = () => {
     const { t } = useTranslation();
-
     const [activeHobby, setActiveHobby] = useState(null);
 
-    const handleOpenDetail = (id) => {
-        setActiveHobby(id);
-    };
-
     return (
-        <section id="hobby" className="py-20 md:py-24 relative overflow-hidden bg-transparent">
+        <section id="hobby" className="py-20 md:py-28 relative overflow-hidden">
             <div className="container mx-auto px-6 max-w-6xl relative z-10">
-
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="mb-12 md:mb-16 flex items-center gap-6"
+                <Motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4 }}
+                    className="mb-12 md:mb-16"
                 >
-                    <h2 className="text-3xl md:text-5xl font-black tracking-tighter" style={{ color: 'var(--text-main)' }}>
+                    <h2 className="text-3xl md:text-4xl font-black tracking-tight text-[var(--text-main)]">
                         {t('hobbySection.title')}
                         <span className="text-[var(--accent)]"> {t('hobbySection.titleHighlight')}</span>
                     </h2>
-                    <div className="h-[1px] flex-grow opacity-20" style={{ backgroundColor: 'var(--text-main)' }}></div>
-                </motion.div>
+                    <div className="h-[2px] w-16 bg-[var(--accent)] mt-4 rounded-full" />
+                </Motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                     {hobbyConfig.map((hobby, index) => (
                         <HobbyCard
                             key={hobby.id}
                             data={hobby}
                             index={index}
-                            onClick={handleOpenDetail}
+                            onClick={setActiveHobby}
                         />
                     ))}
                 </div>
-
             </div>
 
             <AnimatePresence>
@@ -132,4 +114,3 @@ const Hobby = () => {
 };
 
 export default Hobby;
-
