@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useConfigStore } from './store/useConfigStore';
 import Home from '../src/views/Home';
+import AboutPage from '../src/views/About';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import Navbar from "./components/Navbar.jsx";
@@ -136,6 +137,7 @@ const App = () => {
                     >
                         <Routes>
                             <Route path="/" element={<Home />} />
+                            <Route path="/about" element={<AboutPage />} />
                         </Routes>
                     </motion.div>
                 </div>

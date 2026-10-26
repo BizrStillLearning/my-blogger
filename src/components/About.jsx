@@ -2,206 +2,288 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
-    MapPin, GraduationCap, BookOpen, Code2,
-    Target, Shield, Sparkles, Binary, Terminal,
-    ArrowUpRight, Lightbulb, RefreshCw
+    MapPin,
+    GraduationCap,
+    Compass,
+    Coffee,
+    BookOpen,
+    Layers,
+    Code2
 } from 'lucide-react';
 
-const About = () => {
-    const { t } = useTranslation();
-
-    const staggerContainer = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-    };
-
-    const bentoItem = {
-        hidden: { opacity: 0, y: 24, scale: 0.96 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: { type: "spring", stiffness: 90, damping: 16 }
-        }
-    };
+const About = ({ isStandalone = false }) => {
+    const { t, i18n } = useTranslation();
+    const currentLang = i18n.language || 'en';
+    const isId = currentLang.startsWith('id');
 
     return (
-        <section id="about" className="py-24 relative overflow-hidden">
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[var(--accent)] opacity-[0.03] blur-[120px] pointer-events-none rounded-full" />
-
-            <div className="container mx-auto px-6 max-w-6xl relative z-10">
+        <section
+            id="about"
+            className={`${isStandalone ? 'pt-8 pb-20' : 'py-20 md:py-28'} relative`}
+        >
+            <div className="container mx-auto px-6 max-w-5xl">
+                {/* Header: Clean Editorial Typography */}
                 <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="mb-14 flex items-center gap-6"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="flex flex-col space-y-4 max-w-3xl"
                 >
-                    <h2 className="text-4xl md:text-5xl font-black tracking-tighter" style={{ color: 'var(--text-main)' }}>
-                        {t('about.title')}
-                        <span className="text-[var(--accent)]"> {t('about.highlight', 'Me')}.</span>
+                    <div className="flex items-center gap-3">
+                        <span className="w-6 h-[2px] bg-[var(--accent)] inline-block" />
+                        <span className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
+                            {isId ? '01 / Biografi & Perspektif' : '01 / Biography & Perspective'}
+                        </span>
+                    </div>
+
+                    <h2
+                        className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.15]"
+                        style={{ color: 'var(--text-main)' }}
+                    >
+                        {t('about.title')}{' '}
+                        <span className="text-[var(--accent)]">{t('about.highlight', 'Me')}.</span>
                     </h2>
-                    <div className="h-[1px] flex-grow opacity-10" style={{ backgroundColor: 'var(--text-main)' }}></div>
+
+                    <p
+                        className="text-lg sm:text-xl font-normal leading-relaxed opacity-85 pt-1"
+                        style={{ color: 'var(--text-main)' }}
+                    >
+                        {t('about.p1')}
+                    </p>
                 </motion.div>
 
-                <motion.div
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-[minmax(180px,auto)] gap-4 md:gap-5"
-                >
+                {/* Main Split Layout: Pure Flexbox, Strictly NO CSS Grid */}
+                <div className="mt-12 md:mt-16 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+                    
+                    {/* Primary Narrative Column */}
                     <motion.div
-                        variants={bentoItem}
-                        whileHover={{ y: -4 }}
-                        className="lg:col-span-2 lg:row-span-2 p-8 md:p-10 rounded-[2.5rem] border relative overflow-hidden group flex flex-col justify-between transition-all duration-500"
-                        style={{
-                            borderColor: 'rgba(var(--text-main-rgb), 0.08)',
-                            backgroundColor: 'rgba(var(--text-main-rgb), 0.02)',
-                        }}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4 }}
+                        className="flex-1 flex flex-col space-y-10 w-full"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                        <Binary size={220} className="absolute -top-12 -right-12 opacity-[0.03] group-hover:opacity-[0.07] group-hover:scale-110 transition-all duration-700 pointer-events-none" style={{ color: 'var(--accent)' }} />
-
-                        <div className="flex items-center justify-between relative z-10 mb-8">
-                            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-                                <Terminal size={12} style={{ color: 'var(--accent)' }} />
-                                <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] opacity-80" style={{ color: 'var(--text-main)' }}>
-                                    ABOUT.ME // 2026
-                                </span>
+                        {/* Narrative Block 1: Background & Boarding School Discipline */}
+                        <div className="flex flex-col space-y-3">
+                            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-[var(--accent)]">
+                                <BookOpen size={14} />
+                                <span>{isId ? 'Pondasi & Karakter' : 'Foundations & Discipline'}</span>
                             </div>
-                            <div className="flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                <span className="text-[10px] font-mono opacity-50 uppercase tracking-widest" style={{ color: 'var(--text-main)' }}>Active</span>
-                            </div>
-                        </div>
 
-                        <div className="relative z-10 mt-auto">
-                            <h3 className="text-2xl md:text-3xl lg:text-2xl font-bold leading-[1.7] tracking-tight mb-10" style={{ color: 'var(--text-main)' }}>
-                                {t('about.p1')}
+                            <h3
+                                className="text-xl sm:text-2xl font-bold tracking-tight"
+                                style={{ color: 'var(--text-main)' }}
+                            >
+                                {isId
+                                    ? 'Dari Pesantren ke Dunia Rekayasa Sistem'
+                                    : 'From Boarding School to Systems Engineering'}
                             </h3>
-                        </div>
-                    </motion.div>
 
-                    <motion.div
-                        variants={bentoItem}
-                        whileHover={{ y: -4 }}
-                        className="lg:col-span-2 lg:row-span-2 p-8 md:p-10 rounded-[2.5rem] border flex flex-col md:flex-row gap-8 lg:gap-12 overflow-hidden relative transition-all duration-500"
-                        style={{
-                            borderColor: 'rgba(var(--text-main-rgb), 0.08)',
-                            backgroundColor: 'rgba(var(--text-main-rgb), 0.02)'
-                        }}
-                    >
-                        <MapPin size={200} className="absolute -bottom-10 -right-10 opacity-[0.02] group-hover:scale-110 group-hover:opacity-[0.05] transition-all duration-700 pointer-events-none" style={{ color: 'var(--text-main)' }} />
-
-                        <div className="flex-1 flex flex-col justify-between relative z-10">
-                            <div>
-                                <div className="flex items-center gap-2 mb-6">
-                                    <Sparkles size={14} style={{ color: 'var(--accent)' }} />
-                                    <p className="text-[10px] opacity-40 font-black uppercase tracking-[0.25em]" style={{ color: 'var(--text-main)' }}>Profile</p>
-                                </div>
-
-                                <div className="mb-8">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <div className="relative flex items-center justify-center">
-                                            <div className="w-3 h-3 rounded-full bg-[var(--accent)]" />
-                                            <div className="absolute w-6 h-6 rounded-full bg-[var(--accent)] opacity-40 animate-ping" />
-                                        </div>
-                                        <h4 className="text-xl md:text-2xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>Surabaya, ID</h4>
-                                    </div>
-                                    <p className="text-[11px] opacity-40 font-mono tracking-wider">07°15'S 112°45'E</p>
-                                </div>
-                            </div>
-
-                            <div className="pt-6 border-t border-white/5 mt-auto">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <GraduationCap size={16} className="opacity-50" style={{ color: 'var(--text-main)' }} />
-                                    <p className="text-[10px] opacity-40 font-black uppercase tracking-[0.2em]" style={{ color: 'var(--text-main)' }}>Education</p>
-                                </div>
-                                <p className="text-sm md:text-base font-bold tracking-wide mt-2" style={{ color: 'var(--text-main)' }}>Universitas Muhammadiyah Surabaya</p>
-                                <p className="text-[10px] opacity-50 font-medium uppercase tracking-widest mt-1">Informatics Engineering</p>
+                            <div className="flex flex-col space-y-4 text-base sm:text-[17px] leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
+                                <p>{t('about.p2')}</p>
+                                <p>
+                                    {isId
+                                        ? 'Pengalaman hidup mandiri di pondok pesantren Annajiyah Bahrul Ulum (Jombang) menanamkan kebiasaan untuk berpikir jernih di bawah tekanan, tekun membaca dokumentasi secara menyeluruh, dan tidak mudah menyerah saat menghadapi masalah teknis yang rumit.'
+                                        : 'Living independently for three years at an Islamic boarding school in Jombang taught me patience and mental focus. It shaped my habit of reading technical docs deeply, diagnosing tricky edge cases calmly, and respecting the time good engineering takes.'}
+                                </p>
                             </div>
                         </div>
 
-                        <div className="hidden md:block w-px bg-white/5 relative z-10" />
-                        <div className="md:hidden h-px w-full bg-white/5 relative z-10" />
+                        {/* Divider */}
+                        <div className="h-[1px] w-full bg-[var(--text-main)]/10" />
 
-                        <div className="flex-1 flex flex-col justify-center relative z-10">
-                            <div className="flex items-center gap-2 mb-6">
-                                <Target size={14} style={{ color: 'var(--accent)' }} />
-                                <p className="text-[10px] opacity-40 font-black uppercase tracking-[0.25em]" style={{ color: 'var(--text-main)' }}>Core Values</p>
+                        {/* Narrative Block 2: Engineering Philosophy */}
+                        <div className="flex flex-col space-y-3">
+                            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-[var(--accent)]">
+                                <Layers size={14} />
+                                <span>{isId ? 'Filosofi Rekayasa' : 'Engineering Philosophy'}</span>
                             </div>
 
-                            <div className="flex flex-col gap-4">
-                                {[
-                                    { icon: Lightbulb, label: 'Problem Solving', desc: 'Architecting optimal solutions' },
-                                    { icon: RefreshCw, label: 'Continuous Learning', desc: 'Adapting to new paradigms' },
-                                    { icon: Shield, label: 'Discipline', desc: 'Consistency over intensity' }
-                                ].map((val, i) => (
-                                    <div key={i} className="flex items-center gap-4 p-4 rounded-[1.5rem] border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors">
-                                        <div className="p-2.5 rounded-xl bg-white/5 shrink-0">
-                                            <val.icon size={18} style={{ color: 'var(--accent)' }} />
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="text-sm md:text-base font-bold tracking-wide mb-0.5" style={{ color: 'var(--text-main)' }}>{val.label}</span>
-                                            <span className="text-[10px] opacity-50 font-medium tracking-wide">{val.desc}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
+                            <h3
+                                className="text-xl sm:text-2xl font-bold tracking-tight"
+                                style={{ color: 'var(--text-main)' }}
+                            >
+                                {isId
+                                    ? 'Pragmatisme, Efisiensi, & Kode yang Terbaca'
+                                    : 'Pragmatism, Efficiency, & Clear Code'}
+                            </h3>
 
-                    <motion.div
-                        variants={bentoItem}
-                        whileHover={{ y: -4 }}
-                        className="lg:col-span-2 lg:row-span-1 p-8 rounded-[2.5rem] border flex flex-col justify-center group transition-all duration-500 relative overflow-hidden"
-                        style={{
-                            borderColor: 'rgba(var(--text-main-rgb), 0.08)',
-                            backgroundColor: 'rgba(var(--text-main-rgb), 0.02)'
-                        }}
-                    >
-                        <div className="flex items-center gap-2.5 mb-3">
-                            <BookOpen size={16} className="opacity-50 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--accent)' }} />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40" style={{ color: 'var(--text-main)' }}>Background Story</span>
-                        </div>
-                        <p className="text-sm md:text-base opacity-75 leading-relaxed font-medium" style={{ color: 'var(--text-main)' }}>
-                            {t('about.p2')}
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        variants={bentoItem}
-                        whileHover={{ y: -4 }}
-                        className="lg:col-span-2 lg:row-span-1 p-8 rounded-[2.5rem] border flex flex-col justify-center group relative overflow-hidden transition-all duration-500"
-                        style={{
-                            borderColor: 'rgba(var(--accent-rgb), 0.15)',
-                            backgroundColor: 'rgba(var(--accent-rgb), 0.03)'
-                        }}
-                    >
-                        <div
-                            className="absolute inset-0 opacity-[0.04] pointer-events-none"
-                            style={{
-                                backgroundImage: 'radial-gradient(var(--text-main) 1px, transparent 1px)',
-                                backgroundSize: '14px 14px'
-                            }}
-                        />
-
-                        <div className="relative z-10 flex flex-col justify-between h-full">
-                            <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center gap-2.5">
-                                    <Code2 size={16} style={{ color: 'var(--accent)' }} />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>Active Exploration</span>
-                                </div>
-                                <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" style={{ color: 'var(--accent)' }} />
-                            </div>
-
-                            <p className="text-sm md:text-base leading-relaxed font-bold tracking-tight opacity-90" style={{ color: 'var(--text-main)' }}>
-                                {t('aboutDetail.currentExplorationText', 'Merancang arsitektur sistem yang skalabel dan mengeksplorasi ekosistem AI modern untuk pengembangan Web & Mobile.')}
+                            <p className="text-base sm:text-[17px] leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
+                                {isId
+                                    ? 'Saya percaya bahwa kode yang baik adalah kode yang mudah dipahami rekan tim, efisien dalam pemanfaatan sumber daya memori, dan memecahkan masalah riil pengguna tanpa kompleksitas yang berlebihan. Saya lebih memilih memahami cara kerja internal sistem dan fondasi protokol daripada sekadar mengikuti tren sesaat.'
+                                    : 'I value readable code, measurable memory efficiency, and architecture that solves real problems without over-engineering. Understanding protocol fundamentals and system internals always brings more enduring value than chasing fleeting framework hype.'}
                             </p>
                         </div>
+
+                        {/* Divider */}
+                        <div className="h-[1px] w-full bg-[var(--text-main)]/10" />
+
+                        {/* Narrative Block 3: Current Exploration */}
+                        <div className="flex flex-col space-y-3">
+                            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-[var(--accent)]">
+                                <Code2 size={14} />
+                                <span>{isId ? 'Eksplorasi Saat Ini' : 'Current Exploration'}</span>
+                            </div>
+
+                            <h3
+                                className="text-xl sm:text-2xl font-bold tracking-tight"
+                                style={{ color: 'var(--text-main)' }}
+                            >
+                                {isId
+                                    ? 'Integrasi Web, Sistem Backend, & Kecerdasan Buatan'
+                                    : 'Web Systems, Backend Architectures, & AI Tooling'}
+                            </h3>
+
+                            <div className="flex flex-col space-y-3 text-base sm:text-[17px] leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
+                                <p>{t('aboutDetail.currentExplorationText')}</p>
+                                <p>{t('aboutDetail.futureGoalsText')}</p>
+                            </div>
+                        </div>
+
+                        {/* Core Principles: Flex layout (No Grid!) */}
+                        <div className="pt-2">
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <div className="flex-1 p-5 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02]">
+                                    <span className="text-[11px] font-mono font-semibold text-[var(--accent)] block mb-1">
+                                        01 / {isId ? 'Disiplin' : 'Discipline'}
+                                    </span>
+                                    <h4 className="text-sm font-bold mb-1.5" style={{ color: 'var(--text-main)' }}>
+                                        {isId ? 'Konsistensi Logika' : 'Consistent Logic'}
+                                    </h4>
+                                    <p className="text-xs opacity-70 leading-relaxed" style={{ color: 'var(--text-main)' }}>
+                                        {isId
+                                            ? 'Membiasakan diri memeriksa logika secara teliti dari unit terkecil hingga arsitektur menyeluruh.'
+                                            : 'Carefully validating logic from the smallest unit up to the overarching system design.'}
+                                    </p>
+                                </div>
+
+                                <div className="flex-1 p-5 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02]">
+                                    <span className="text-[11px] font-mono font-semibold text-[var(--accent)] block mb-1">
+                                        02 / {isId ? 'Kesederhanaan' : 'Simplicity'}
+                                    </span>
+                                    <h4 className="text-sm font-bold mb-1.5" style={{ color: 'var(--text-main)' }}>
+                                        {isId ? 'Anti-Overengineering' : 'Pragmatic Design'}
+                                    </h4>
+                                    <p className="text-xs opacity-70 leading-relaxed" style={{ color: 'var(--text-main)' }}>
+                                        {isId
+                                            ? 'Solusi yang elegan adalah yang paling sederhana dan mudah dipelihara dalam jangka panjang.'
+                                            : 'The most elegant solution is straightforward, reliable, and easy to maintain over time.'}
+                                    </p>
+                                </div>
+
+                                <div className="flex-1 p-5 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02]">
+                                    <span className="text-[11px] font-mono font-semibold text-[var(--accent)] block mb-1">
+                                        03 / {isId ? 'Eksplorasi' : 'Curiosity'}
+                                    </span>
+                                    <h4 className="text-sm font-bold mb-1.5" style={{ color: 'var(--text-main)' }}>
+                                        {isId ? 'Pembelajar Aktif' : 'Continuous Growth'}
+                                    </h4>
+                                    <p className="text-xs opacity-70 leading-relaxed" style={{ color: 'var(--text-main)' }}>
+                                        {isId
+                                            ? 'Eksplorasi bahasa modern seperti Go & Rust dan integrasi AI fungsional untuk alur kerja riil.'
+                                            : 'Exploring performant languages like Go & Rust and functional AI workflows for real utility.'}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                     </motion.div>
 
-                </motion.div>
+                    {/* Secondary Column: Clean Editorial Metadata Rail (Pure Flexbox) */}
+                    <motion.aside
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.08 }}
+                        className="w-full lg:w-80 shrink-0 flex flex-col space-y-6"
+                    >
+                        <div className="p-6 sm:p-7 rounded-2xl border border-[var(--text-main)]/10 bg-[var(--text-main)]/[0.02] flex flex-col space-y-6">
+                            
+                            {/* Metadata Item: Location */}
+                            <div className="flex flex-col space-y-1.5">
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
+                                    <MapPin size={12} />
+                                    <span>{isId ? 'Lokasi' : 'Location'}</span>
+                                </div>
+                                <span className="text-sm font-semibold" style={{ color: 'var(--text-main)' }}>
+                                    Surabaya & Jombang, Indonesia
+                                </span>
+                            </div>
+
+                            <div className="h-[1px] bg-[var(--text-main)]/10" />
+
+                            {/* Metadata Item: Education */}
+                            <div className="flex flex-col space-y-1.5">
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
+                                    <GraduationCap size={13} />
+                                    <span>{isId ? 'Pendidikan' : 'Education'}</span>
+                                </div>
+                                <div className="flex flex-col space-y-0.5">
+                                    <span className="text-sm font-semibold" style={{ color: 'var(--text-main)' }}>
+                                        S1 Teknik Informatika
+                                    </span>
+                                    <span className="text-xs opacity-70" style={{ color: 'var(--text-main)' }}>
+                                        Universitas Muhammadiyah Surabaya (2025 - Sekarang)
+                                    </span>
+                                </div>
+                                <div className="flex flex-col space-y-0.5 pt-1">
+                                    <span className="text-xs font-medium" style={{ color: 'var(--text-main)' }}>
+                                        SMK TI Annajiyah Bahrul Ulum
+                                    </span>
+                                    <span className="text-[11px] opacity-60" style={{ color: 'var(--text-main)' }}>
+                                        Pesantren Tambakberas Jombang (2022 - 2025)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="h-[1px] bg-[var(--text-main)]/10" />
+
+                            {/* Metadata Item: Focus Areas */}
+                            <div className="flex flex-col space-y-1.5">
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
+                                    <Compass size={12} />
+                                    <span>{isId ? 'Domain Minat' : 'Primary Focus'}</span>
+                                </div>
+                                <span className="text-xs font-medium leading-relaxed opacity-85" style={{ color: 'var(--text-main)' }}>
+                                    Full Stack Web Development, Backend Architectures, Memory-efficient Systems, Practical AI Engineering.
+                                </span>
+                            </div>
+
+                            <div className="h-[1px] bg-[var(--text-main)]/10" />
+
+                            {/* Metadata Item: Personal Interests */}
+                            <div className="flex flex-col space-y-1.5">
+                                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
+                                    <Coffee size={12} />
+                                    <span>{isId ? 'Di Luar Coding' : 'Beyond the Screen'}</span>
+                                </div>
+                                <p className="text-xs leading-relaxed opacity-80" style={{ color: 'var(--text-main)' }}>
+                                    {isId
+                                        ? 'Menikmati seduhan kopi manual, apresiasi visual sinematografi/film, permainan strategi, dan musik kurasi.'
+                                        : 'Pour-over coffee, cinematography & visual storytelling, competitive strategy gaming, and curated music.'}
+                                </p>
+                            </div>
+
+                            <div className="h-[1px] bg-[var(--text-main)]/10" />
+
+                            {/* Metadata Item: Status */}
+                            <div className="flex flex-col space-y-2">
+                                <span className="text-[11px] font-mono uppercase tracking-wider opacity-50" style={{ color: 'var(--text-main)' }}>
+                                    {isId ? 'Ketersediaan' : 'Availability'}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+                                    <span className="text-xs font-medium" style={{ color: 'var(--text-main)' }}>
+                                        {isId ? 'Terbuka untuk kolaborasi proyek' : 'Open for projects & collaboration'}
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </motion.aside>
+
+                </div>
             </div>
         </section>
     );

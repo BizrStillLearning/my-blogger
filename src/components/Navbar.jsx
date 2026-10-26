@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Palette, Menu, X, Globe, ChevronDown, Code2 } from 'lucide-react';
 import { useConfigStore } from '../store/useConfigStore';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import ReactCountryFlag from 'react-country-flag';
 
 const Navbar = () => {
@@ -14,6 +15,9 @@ const Navbar = () => {
     const [showLangMenu, setShowLangMenu] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('#');
+    const location = useLocation();
+    const isHome = location.pathname === '/';
+    const getHref = (href) => (isHome ? href : (href === '#' ? '/' : `/${href}`));
 
     const currentLang = i18n.language || 'en';
 
@@ -122,7 +126,7 @@ const Navbar = () => {
                         const isActive = activeSection === link.href;
                         return (
                             <a
-                                key={link.name} href={link.href}
+                                key={link.name} href={getHref(link.href)}
                                 className={`px-5 py-1.5 text-sm font-semibold transition-all rounded-full hover:bg-white/10 cursor-pointer ${isActive ? 'bg-white/15 shadow-sm font-bold' : 'opacity-80'}`}
                                 style={{ color: 'var(--text-main)', border: isActive ? '1px solid rgba(255,255,255,0.1)' : '1px solid transparent' }}
                             >
@@ -209,7 +213,7 @@ const Navbar = () => {
                                         const isActive = activeSection === link.href;
                                         return (
                                             <a
-                                                key={link.name} href={link.href} onClick={() => setIsMobileMenuOpen(false)}
+                                                key={link.name} href={getHref(link.href)} onClick={() => setIsMobileMenuOpen(false)}
                                                 className={`px-4 py-3 font-semibold rounded-2xl transition-all text-base sm:text-lg text-center cursor-pointer ${isActive ? 'bg-white/10 font-bold' : 'opacity-80'}`}
                                                 style={{ color: isActive ? 'var(--accent)' : 'var(--text-main)' }}
                                             >
